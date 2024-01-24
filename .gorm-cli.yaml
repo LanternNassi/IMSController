@@ -1,0 +1,12 @@
+db:
+  host: localhost
+  port: 5432
+  dialects: postgres
+  user: postgres
+  password: 123456789
+  dbname: imscontroller
+  sslmode: disable
+  timezone: UTC
+
+migration:
+  path: ./migration
