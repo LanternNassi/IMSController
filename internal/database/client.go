@@ -58,6 +58,7 @@ func (client Client) Migrate() error {
 	err := client.DB.AutoMigrate(
 		&models.Client{},
 		&models.Backup{},
+		&models.Bill{},
 	)
 
 	return err

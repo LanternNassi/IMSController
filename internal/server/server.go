@@ -12,14 +12,16 @@ import (
 )
 
 type EchoServer struct {
-	echo *echo.Echo
-	DB   interfaces.DataBaseClient
+	echo    *echo.Echo
+	DB      interfaces.DataBaseClient
+	MongoDB interfaces.MongoDatabaseClient
 }
 
-func NewEchoServer(db interfaces.DataBaseClient) interfaces.Server {
+func NewEchoServer(db interfaces.DataBaseClient, mongo_db interfaces.MongoDatabaseClient) interfaces.Server {
 	server := &EchoServer{
-		echo: echo.New(),
-		DB:   db,
+		echo:    echo.New(),
+		DB:      db,
+		MongoDB: mongo_db,
 	}
 
 	server.registerRoutes()
@@ -60,9 +62,15 @@ func (s *EchoServer) registerRoutes() {
 	cg.PUT("/:id", s.UpdateClient)
 	cg.GET("/:id", s.GetClientById)
 
-	bg := s.echo.Group("/backup")
+	bg := s.echo.Group("/backups")
 	bg.GET("", s.Getbackups)
 	bg.POST("", s.AddBackup)
 	bg.GET("/:id", s.GetBackUpById)
+	bg.GET("/download/:id", s.DownloadBackup)
+
+	dg := s.echo.Group("/bills")
+	dg.GET("", s.GetBills)
+	dg.POST("", s.AddBill)
+	dg.GET("/:id", s.GetBillById)
 
 }

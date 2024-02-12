@@ -8,9 +8,19 @@ import (
 
 func (c Client) Getbackups(ctx context.Context, params *models.Backup) ([]models.Backup, error) {
 	var backups []models.Backup
+	var trimmedbackups []models.Backup
 
 	result := c.DB.WithContext(ctx).Where(params).Find(&backups)
-	return backups, result.Error
+
+	for _, backup := range backups {
+
+		// Creating a new slice to avoid information overload during transfer
+		backup.Backup = []byte{}
+
+		trimmedbackups = append(trimmedbackups, backup)
+	}
+
+	return trimmedbackups, result.Error
 }
 
 func (c Client) AddBackup(ctx context.Context, backup *models.Backup) (*models.Backup, error) {
