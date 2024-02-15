@@ -2,6 +2,7 @@ package server
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/LanternNassi/IMSController/internal/models"
 	"github.com/labstack/echo"
@@ -50,4 +51,43 @@ func (s *EchoServer) GetBillById(ctx echo.Context) error {
 	}
 
 	return ctx.JSON(http.StatusOK, bill)
+}
+
+func (s *EchoServer) UpdateBill(ctx echo.Context) error {
+	ID := ctx.Param("id")
+
+	_bill := new(models.Bill)
+	if err := ctx.Bind(_bill); err != nil {
+		return ctx.JSON(http.StatusBadRequest, err)
+	}
+
+	active_bill, _ := s.DB.GetBillById(ctx.Request().Context(), ID)
+
+	if _bill.Billed {
+		//Clearing the clients disconnected state and prolonging their activity
+		client, client_errs := s.DB.GetClientById(ctx.Request().Context(), active_bill.ClientID)
+
+		if client_errs != nil {
+			return ctx.JSON(http.StatusBadRequest, client_errs)
+		}
+
+		client.Status = "connected"
+		client.ValidTill = time.Now().AddDate(0, 0, 30)
+
+		_, _client_errs := s.DB.UpdateClient(ctx.Request().Context(), client, active_bill.ClientID)
+
+		if _client_errs != nil {
+			return ctx.JSON(http.StatusBadRequest, _client_errs)
+		}
+
+	}
+
+	bill, errs := s.DB.UpdateBill(ctx.Request().Context(), _bill, ID)
+
+	if errs != nil {
+		return ctx.JSON(http.StatusInternalServerError, errs)
+	}
+
+	return ctx.JSON(http.StatusOK, bill)
+
 }

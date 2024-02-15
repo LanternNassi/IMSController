@@ -3,6 +3,8 @@ package database
 import (
 	"github.com/LanternNassi/IMSController/internal/models"
 
+	"time"
+
 	"context"
 )
 
@@ -20,6 +22,20 @@ func (c Client) Getbackups(ctx context.Context, params *models.Backup) ([]models
 		trimmedbackups = append(trimmedbackups, backup)
 	}
 
+	return trimmedbackups, result.Error
+}
+
+func (c Client) GetBackUpsByDate(ctx context.Context, field string, comparator string, time_var time.Time) ([]models.Backup, error) {
+	var backups []models.Backup
+	var trimmedbackups []models.Backup
+
+	result := c.DB.WithContext(ctx).Where(field+comparator+"?", time_var).Find(&backups)
+
+	for _, backup := range backups {
+		backup.Backup = []byte{}
+
+		trimmedbackups = append(trimmedbackups, backup)
+	}
 	return trimmedbackups, result.Error
 }
 

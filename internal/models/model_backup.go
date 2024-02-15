@@ -10,5 +10,5 @@ type Backup struct {
 	Name     string `json:"Name"`
 	Backup   []byte `json:"Backup"`
 	Size     int64  `json:"Size"`
-	Billed   bool   `json:"Billed"`
+	Bill     uint   `json:"Bill"`
 }

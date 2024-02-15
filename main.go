@@ -12,24 +12,24 @@ func main() {
 
 	client, err := database.NewDatabaseClient()
 
-	mongo_client, mongo_err := database.NewMongoDatabaseClient()
+	// mongo_client, mongo_err := database.NewMongoDatabaseClient()
 
-	//Connecting to mongo database
-	if mongo_err != nil {
-		log.Fatal(mongo_err.Error())
-	}
+	// //Connecting to mongo database
+	// if mongo_err != nil {
+	// 	log.Fatal(mongo_err.Error())
+	// }
 
-	mongo_object, mongo_context, mongo_error := mongo_client.ConnectMongo("mongodb+srv://lanternnassi:3YK3OyDBinRGRlzB@cluster0.15lo0el.mongodb.net/?retryWrites=true&w=majority")
+	// mongo_object, mongo_context, mongo_error := mongo_client.ConnectMongo("mongodb+srv://lanternnassi:3YK3OyDBinRGRlzB@cluster0.15lo0el.mongodb.net/?retryWrites=true&w=majority")
 
-	if mongo_error != nil {
-		log.Fatal(mongo_error.Error())
-	}
+	// if mongo_error != nil {
+	// 	log.Fatal(mongo_error.Error())
+	// }
 
-	mongo_ping_error := mongo_client.PingMongo(mongo_object, mongo_context)
+	// mongo_ping_error := mongo_client.PingMongo(mongo_object, mongo_context)
 
-	if mongo_ping_error != nil {
-		log.Fatal(mongo_ping_error)
-	}
+	// if mongo_ping_error != nil {
+	// 	log.Fatal(mongo_ping_error)
+	// }
 
 	//Migrating the postgres database
 	migration_err := client.Migrate()
@@ -39,7 +39,7 @@ func main() {
 
 	}
 
-	server := server.NewEchoServer(client, mongo_client)
+	server := server.NewEchoServer(client)
 
 	starting_error := server.Start()
 
@@ -47,6 +47,6 @@ func main() {
 		log.Fatal(starting_error.Error())
 	}
 
-	defer mongo_client.CloseMongo(mongo_object, mongo_context)
+	// defer mongo_client.CloseMongo(mongo_object, mongo_context)
 
 }
