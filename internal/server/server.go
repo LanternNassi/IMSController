@@ -60,9 +60,16 @@ func (s *EchoServer) registerRoutes() {
 	cg.PUT("/:id", s.UpdateClient)
 	cg.GET("/:id", s.GetClientById)
 
-	bg := s.echo.Group("/backup")
+	bg := s.echo.Group("/backups")
 	bg.GET("", s.Getbackups)
 	bg.POST("", s.AddBackup)
 	bg.GET("/:id", s.GetBackUpById)
+	bg.GET("/download/:id", s.DownloadBackup)
+
+	dg := s.echo.Group("/bills")
+	dg.GET("", s.GetBills)
+	dg.POST("", s.AddBill)
+	dg.GET("/:id", s.GetBillById)
+	dg.PUT("/:id", s.UpdateBill)
 
 }

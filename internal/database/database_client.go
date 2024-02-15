@@ -23,7 +23,7 @@ func (c Client) AddClient(ctx context.Context, client *models.Client) (*models.C
 
 func (c Client) UpdateClient(ctx context.Context, client *models.Client, id string) (*models.Client, error) {
 
-	result := c.DB.WithContext(ctx).Where("ID = ?", id).Updates(models.Client{
+	result := c.DB.WithContext(ctx).Where("client_id = ?", id).Updates(models.Client{
 		FirstName:    client.FirstName,
 		LastName:     client.LastName,
 		Email:        client.Email,
@@ -31,6 +31,7 @@ func (c Client) UpdateClient(ctx context.Context, client *models.Client, id stri
 		Address:      client.Address,
 		BusinessName: client.BusinessName,
 		Status:       client.Status,
+		ValidTill:    client.ValidTill,
 	})
 
 	if result.Error != nil {
@@ -48,7 +49,7 @@ func (c Client) UpdateClient(ctx context.Context, client *models.Client, id stri
 
 func (c Client) GetClientById(ctx context.Context, id string) (*models.Client, error) {
 	client := &models.Client{}
-	result := c.DB.WithContext(ctx).Where("ID = ?", id).First(&client)
+	result := c.DB.WithContext(ctx).Where("client_id = ?", id).First(&client)
 
 	if result.Error != nil {
 		return nil, result.Error

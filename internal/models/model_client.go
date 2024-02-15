@@ -9,14 +9,15 @@ import (
 
 type Client struct {
 	gorm.Model
-	ClientID     string `gorm:"primaryKey" json:"ClientID"`
-	FirstName    string `json:"FirstName"`
-	LastName     string `json:"LastName"`
-	Email        string `json:"Email"`
-	Phone        string `json:"Phone"`
-	Address      string `json:"Address"`
-	BusinessName string `json:"BusinessName"`
-	Status       string `json:"Status"`
+	ClientID     string    `gorm:"primaryKey" json:"ClientID"`
+	FirstName    string    `json:"FirstName"`
+	LastName     string    `json:"LastName"`
+	Email        string    `json:"Email"`
+	Phone        string    `json:"Phone"`
+	Address      string    `json:"Address"`
+	BusinessName string    `json:"BusinessName"`
+	Status       string    `json:"Status"`
+	ValidTill    time.Time `json:"ValidTill"`
 }
 
 func (c *Client) CreateUniqueID() {
