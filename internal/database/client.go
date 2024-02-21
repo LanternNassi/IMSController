@@ -17,7 +17,9 @@ type Client struct {
 }
 
 func NewDatabaseClient() (interfaces.DataBaseClient, error) {
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=%s", "localhost", "postgres", "123456789", "imscontroller", 5432, "disable")
+	//dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=%s", "localhost", "postgres", "123456789", "imscontroller", 5432, "disable")
+
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=%s", "102.134.147.233", "tsaonokrtitbzytk", "4HLeh9LwP0aN+Dach0E1jt5I7K%N%5m7", "edendsmwqscdihljjantklpo", 32761, "disable")
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
 
