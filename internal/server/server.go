@@ -3,8 +3,10 @@ package server
 import (
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/LanternNassi/IMSController/internal/models"
+	"github.com/joho/godotenv"
 
 	"github.com/labstack/echo"
 
@@ -28,7 +30,13 @@ func NewEchoServer(db interfaces.DataBaseClient) interfaces.Server {
 }
 
 func (s *EchoServer) Start() error {
-	if err := s.echo.Start("0.0.0.0:10000"); err != nil && err != http.ErrServerClosed {
+
+	err_env := godotenv.Load(".env")
+	if err_env != nil {
+		log.Fatalf("Error loading environment variables file")
+	}
+
+	if err := s.echo.Start(os.Getenv("APPHOST")); err != nil && err != http.ErrServerClosed {
 		log.Fatalf("server shutdown occurred: %s", err)
 		return err
 	}
