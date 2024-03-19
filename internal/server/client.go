@@ -2,15 +2,35 @@ package server
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/LanternNassi/IMSController/internal/models"
 	"github.com/labstack/echo"
 )
 
 func (s *EchoServer) AddClient(ctx echo.Context) error {
+
 	client := new(models.Client)
+
+	type Date struct {
+		ValidTill string
+	}
+
 	if err := ctx.Bind(client); err != nil {
 		return ctx.JSON(http.StatusBadRequest, err)
+	}
+
+	//Working on the data gotten
+	Date_stamp := new(Date)
+	if date_err := ctx.Bind(Date_stamp); date_err != nil {
+		return ctx.JSON(http.StatusBadRequest, date_err)
+	}
+
+	validDate, date_conv_err := time.Parse(time.RFC3339, Date_stamp.ValidTill)
+	client.ValidTill = validDate
+
+	if date_conv_err != nil {
+		return ctx.JSON(http.StatusBadRequest, date_conv_err)
 	}
 
 	client, err := s.DB.AddClient(ctx.Request().Context(), client)

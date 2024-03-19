@@ -49,10 +49,8 @@ func (s *EchoServer) AddBackup(ctx echo.Context) error {
 	}
 
 	defer func(file multipart.File) {
-		err := file.Close()
-		if err != nil {
+		file.Close()
 
-		}
 	}(file)
 
 	// Read the content of the file
@@ -112,6 +110,9 @@ func (s *EchoServer) AddBackup(ctx echo.Context) error {
 	//Performing operations on the billing object
 	_bill.BackupCount += 1
 
+	//Adding to the bill backup size
+	_bill.BackupSize += handler.Size
+
 	//Adding the cost based on the size (each byte costing 0.001 to 0.002 UGx)
 	_bill.TotalCost = _bill.TotalCost.Add(decimal.NewFromFloat(float64(handler.Size) * 0.0018273998877))
 
@@ -145,6 +146,47 @@ func (s *EchoServer) GetBackUpById(ctx echo.Context) error {
 	}
 
 	return ctx.JSON(http.StatusOK, backup)
+}
+
+func (s *EchoServer) DeleteBackUpById(ctx echo.Context) error {
+	id := ctx.Param("id")
+
+	deleted, err := s.DB.DeleteBackUpById(ctx.Request().Context(), id)
+
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, err)
+	}
+
+	return ctx.JSON(http.StatusOK, deleted)
+}
+
+func (s *EchoServer) GetBackUpByClientId(ctx echo.Context) error {
+	clientId := ctx.Param("Id")
+	backups, err := s.DB.Getbackups(ctx.Request().Context(), &models.Backup{ClientID: clientId})
+
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, err)
+	}
+
+	return ctx.JSON(http.StatusOK, backups)
+}
+
+func (s *EchoServer) GetBackUpByBill(ctx echo.Context) error {
+	bill := ctx.Param("bill")
+
+	conv_bill, err := strconv.ParseUint(bill, 10, 32)
+
+	if err != nil {
+		return ctx.JSON(http.StatusBadRequest, err)
+	}
+
+	backups, err := s.DB.Getbackups(ctx.Request().Context(), &models.Backup{Bill: uint(conv_bill)})
+
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, err)
+	}
+
+	return ctx.JSON(http.StatusOK, backups)
 }
 
 func (s *EchoServer) DownloadBackup(ctx echo.Context) error {

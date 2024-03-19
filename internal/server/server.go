@@ -7,6 +7,7 @@ import (
 
 	"github.com/LanternNassi/IMSController/internal/models"
 	"github.com/joho/godotenv"
+	"github.com/labstack/echo/middleware"
 
 	"github.com/labstack/echo"
 
@@ -59,6 +60,9 @@ func (s *EchoServer) Liveness(ctx echo.Context) error {
 }
 
 func (s *EchoServer) registerRoutes() {
+
+	s.echo.Use(middleware.CORS())
+
 	s.echo.GET("/readiness", s.Readiness)
 	s.echo.GET("/liveness", s.Liveness)
 
@@ -73,11 +77,15 @@ func (s *EchoServer) registerRoutes() {
 	bg.POST("", s.AddBackup)
 	bg.GET("/:id", s.GetBackUpById)
 	bg.GET("/download/:id", s.DownloadBackup)
+	bg.GET("/client/:Id", s.GetBackUpByClientId)
+	bg.GET("/bill/:bill", s.GetBackUpByBill)
+	bg.DELETE("/delete/:id", s.DeleteBackUpById)
 
 	dg := s.echo.Group("/bills")
 	dg.GET("", s.GetBills)
 	dg.POST("", s.AddBill)
 	dg.GET("/:id", s.GetBillById)
 	dg.PUT("/:id", s.UpdateBill)
+	dg.GET("/client/:ClientId", s.GetBillByClientId)
 
 }

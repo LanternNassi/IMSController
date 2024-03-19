@@ -12,7 +12,7 @@ import (
 func (c Client) GetBills(ctx context.Context, params *models.Bill) ([]models.Bill, error) {
 	var bills []models.Bill
 
-	result := c.DB.WithContext(ctx).Where(params).Find(&bills)
+	result := c.DB.WithContext(ctx).Where(params).Order("ID DESC").Find(&bills)
 
 	return bills, result.Error
 }
@@ -22,10 +22,10 @@ func (c Client) GetBillsByDate(ctx context.Context, field string, comparator str
 
 	var result *gorm.DB
 
-	result = c.DB.WithContext(ctx).Where(field+comparator+"?", time_var).Find(&bills)
+	result = c.DB.WithContext(ctx).Where(field+comparator+"?", time_var).Order("ID DESC").Find(&bills)
 
 	if client_id != "" {
-		result = c.DB.WithContext(ctx).Where(field+comparator+"?", time_var).Where("client_id = ?", client_id).Find(&bills)
+		result = c.DB.WithContext(ctx).Where(field+comparator+"?", time_var).Where("client_id = ?", client_id).Order("ID DESC").Find(&bills)
 	}
 
 	return bills, result.Error
@@ -46,6 +46,7 @@ func (c Client) AddBill(ctx context.Context, bill *models.Bill) (*models.Bill, e
 func (c Client) UpdateBill(ctx context.Context, bill *models.Bill, id string) (*models.Bill, error) {
 	result := c.DB.WithContext(ctx).Where("ID = ?", id).Updates(models.Bill{
 		BackupCount: bill.BackupCount,
+		BackupSize:  bill.BackupSize,
 		TotalCost:   bill.TotalCost,
 		Billed:      bill.Billed,
 	})
