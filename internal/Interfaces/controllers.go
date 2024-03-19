@@ -26,12 +26,13 @@ type DataBaseClient interface {
 	AddBackup(ctx context.Context, backup *models.Backup) (*models.Backup, error)
 	GetBackUpById(ctx context.Context, id string) (*models.Backup, error)
 	GetBackUpsByDate(ctx context.Context, field string, comparator string, time_var time.Time) ([]models.Backup, error)
+	DeleteBackUpById(ctx context.Context, id string) (bool, error)
 
 	GetBills(ctx context.Context, params *models.Bill) ([]models.Bill, error)
 	AddBill(ctx context.Context, bill *models.Bill) (*models.Bill, error)
 	UpdateBill(ctx context.Context, bill *models.Bill, id string) (*models.Bill, error)
 	GetBillById(ctx context.Context, id string) (*models.Bill, error)
-	GetBillsByDate(ctx context.Context, field string, comparator string, time_var time.Time , client_id string) ([]models.Bill, error)
+	GetBillsByDate(ctx context.Context, field string, comparator string, time_var time.Time, client_id string) ([]models.Bill, error)
 }
 
 type MongoDatabaseClient interface {
@@ -54,9 +55,13 @@ type Server interface {
 	Getbackups(ctx echo.Context) error
 	AddBackup(ctx echo.Context) error
 	GetBackUpById(ctx echo.Context) error
+	GetBackUpByClientId(ctx echo.Context) error
+	GetBackUpByBill(ctx echo.Context) error
+	DeleteBackUpById(ctx echo.Context) error
 
 	GetBills(ctx echo.Context) error
 	AddBill(ctx echo.Context) error
 	GetBillById(ctx echo.Context) error
 	UpdateBill(ctx echo.Context) error
+	GetBillByClientId(ctx echo.Context) error
 }

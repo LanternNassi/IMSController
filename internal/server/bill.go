@@ -53,6 +53,18 @@ func (s *EchoServer) GetBillById(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, bill)
 }
 
+func (s *EchoServer) GetBillByClientId(ctx echo.Context) error {
+	client_id := ctx.Param("ClientId")
+
+	bill, err := s.DB.GetBills(ctx.Request().Context(), &models.Bill{ClientID: client_id})
+
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, err)
+	}
+
+	return ctx.JSON(http.StatusOK, bill)
+}
+
 func (s *EchoServer) UpdateBill(ctx echo.Context) error {
 	ID := ctx.Param("id")
 

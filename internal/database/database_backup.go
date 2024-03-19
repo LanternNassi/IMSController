@@ -12,7 +12,7 @@ func (c Client) Getbackups(ctx context.Context, params *models.Backup) ([]models
 	var backups []models.Backup
 	var trimmedbackups []models.Backup
 
-	result := c.DB.WithContext(ctx).Where(params).Find(&backups)
+	result := c.DB.WithContext(ctx).Where(params).Order("ID DESC").Find(&backups)
 
 	for _, backup := range backups {
 
@@ -29,7 +29,7 @@ func (c Client) GetBackUpsByDate(ctx context.Context, field string, comparator s
 	var backups []models.Backup
 	var trimmedbackups []models.Backup
 
-	result := c.DB.WithContext(ctx).Where(field+comparator+"?", time_var).Find(&backups)
+	result := c.DB.WithContext(ctx).Where(field+comparator+"?", time_var).Order("ID DESC").Find(&backups)
 
 	for _, backup := range backups {
 		backup.Backup = []byte{}
@@ -61,4 +61,14 @@ func (c Client) GetBackUpById(ctx context.Context, id string) (*models.Backup, e
 
 	return backup, nil
 
+}
+
+func (c Client) DeleteBackUpById(ctx context.Context, id string) (bool, error) {
+	result := c.DB.WithContext(ctx).Delete(&models.Backup{}, id).Unscoped()
+
+	if result.Error != nil {
+		return false, result.Error
+	}
+
+	return true, nil
 }
