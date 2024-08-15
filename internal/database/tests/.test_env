@@ -1,0 +1,5 @@
+test_DBHOST="localhost"
+test_DBNAME="imscontroller_test"
+test_DBPASSWORD="123456789"
+test_DBUSER="postgres"
+test_DBPORT="5432"

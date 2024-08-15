@@ -1,13 +1,8 @@
 package database
 
 import (
-	"fmt"
-	"log"
-	"os"
-	"strconv"
 	"time"
 
-	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 
@@ -20,20 +15,9 @@ type Client struct {
 	DB *gorm.DB
 }
 
-func NewDatabaseClient() (interfaces.DataBaseClient, error) {
+func NewDatabaseClient(dsn string) (interfaces.DataBaseClient, *gorm.DB, error) {
 
-	err_env := godotenv.Load(".env")
-	if err_env != nil {
-		log.Fatalf("Error loading environment variables file")
-	}
-
-	dbport, err_conv := strconv.Atoi(os.Getenv("DBPORT"))
-
-	if err_conv != nil {
-		fmt.Println("Error converting string to int:", err_conv)
-	}
-
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=%s", os.Getenv("DBHOST"), os.Getenv("DBUSER"), os.Getenv("DBPASSWORD"), os.Getenv("DBNAME"), dbport, "disable")
+	// dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=%s", os.Getenv("DBHOST"), os.Getenv("DBUSER"), os.Getenv("DBPASSWORD"), os.Getenv("DBNAME"), dbport, "disable")
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
 
@@ -44,12 +28,12 @@ func NewDatabaseClient() (interfaces.DataBaseClient, error) {
 	})
 
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	client := Client{db}
 
-	return client, nil
+	return client, client.DB, nil
 
 }
 
