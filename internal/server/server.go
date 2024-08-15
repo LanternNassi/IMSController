@@ -88,4 +88,8 @@ func (s *EchoServer) registerRoutes() {
 	dg.PUT("/:id", s.UpdateBill)
 	dg.GET("/client/:ClientId", s.GetBillByClientId)
 
+	Ig := s.echo.Group("/Installations")
+	Ig.GET("", s.GetInstallations)
+	Ig.POST("", s.AddInstallation)
+	Ig.GET("/:id", s.GetInstallationById)
 }

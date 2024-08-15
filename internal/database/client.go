@@ -75,6 +75,7 @@ func (client Client) Migrate() error {
 		&models.Client{},
 		&models.Backup{},
 		&models.Bill{},
+		&models.Installation{},
 	)
 
 	return err

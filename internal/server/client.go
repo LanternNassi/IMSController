@@ -46,12 +46,34 @@ func (s *EchoServer) AddClient(ctx echo.Context) error {
 func (s *EchoServer) UpdateClient(ctx echo.Context) error {
 	ID := ctx.Param("id")
 
+	type Date struct {
+		ValidTill string
+	}
+
 	client := new(models.Client)
 	if err := ctx.Bind(client); err != nil {
 		return ctx.JSON(http.StatusBadRequest, err)
 	}
 
 	active_client, _ := s.DB.GetClientById(ctx.Request().Context(), ID)
+
+	//Working on the data gotten
+	Date_stamp := new(Date)
+	if date_err := ctx.Bind(Date_stamp); date_err != nil {
+		return ctx.JSON(http.StatusBadRequest, date_err)
+	}
+
+	if Date_stamp.ValidTill != "" {
+		validDate, date_conv_err := time.Parse(time.RFC3339, Date_stamp.ValidTill)
+
+		if date_conv_err != nil {
+			return ctx.JSON(http.StatusBadRequest, date_conv_err)
+		}
+
+		client.ValidTill = validDate
+	} else {
+		client.ValidTill = active_client.ValidTill
+	}
 
 	//Cleaning up the client object
 	if client.FirstName == "" {

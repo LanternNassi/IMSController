@@ -33,6 +33,12 @@ type DataBaseClient interface {
 	UpdateBill(ctx context.Context, bill *models.Bill, id string) (*models.Bill, error)
 	GetBillById(ctx context.Context, id string) (*models.Bill, error)
 	GetBillsByDate(ctx context.Context, field string, comparator string, time_var time.Time, client_id string) ([]models.Bill, error)
+
+	GetInstallations(ctx context.Context, params *models.Installation) ([]models.Installation, error)
+	AddInstallation(ctx context.Context, installation *models.Installation) (*models.Installation, error)
+	UpdateInstallation(ctx context.Context, installation *models.Installation, id string) (*models.Installation, error)
+	GetInstallationById(ctx context.Context, id string) (*models.Installation, error)
+	DeleteInstallation(ctx context.Context, is string) (bool, error)
 }
 
 type MongoDatabaseClient interface {
@@ -64,4 +70,8 @@ type Server interface {
 	GetBillById(ctx echo.Context) error
 	UpdateBill(ctx echo.Context) error
 	GetBillByClientId(ctx echo.Context) error
+
+	GetInstallations(ctx echo.Context) error
+	AddInstallation(ctx echo.Context) error
+	GetInstallationById(ctx echo.Context) error
 }
