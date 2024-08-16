@@ -19,7 +19,7 @@ run:
 # Run the tests
 test: build
 	@ ${INFO} "Running tests"
-	@ docker-compose -f $(DOCKER_COMPOSE_FILE) run --rm go_test go-test -v
+	@ docker-compose -f $(DOCKER_COMPOSE_FILE) run --rm go_test go test -v
 	@ ${INFO} "Tests completed successfully"
 	@ echo " "
 
