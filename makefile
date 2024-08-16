@@ -11,8 +11,15 @@ build:
 	@ ${INFO} "Docker image built successfully"
 	@ echo " "
 
+# Run the Docker containers
+run:
+	@ ${INFO} "Running the Docker containers"
+	@ docker-compose -f $(DOCKER_COMPOSE_FILE) up -d db go-test
+	@ ${INFO} "Docker containers running successfully"
+	@ echo " "
+
 # Run the tests
-test:build
+test:run
 	@ ${INFO} "Running tests"
 	@ docker-compose -f $(DOCKER_COMPOSE_FILE) exec go-test go test -v  
 	@ ${INFO} "Tests completed successfully"
