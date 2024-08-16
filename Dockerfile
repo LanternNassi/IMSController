@@ -1,5 +1,5 @@
 # Use the official Golang image
-FROM golang:latest
+FROM golang:latest As builder
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -10,8 +10,13 @@ COPY . .
 # Build the Go application
 RUN go build -o IMSController .
 
-# Expose the port the application runs on
+
+FROM builder As final
+
 EXPOSE 10000
 
-# Command to run the application
 CMD ["./IMSController"]
+
+
+
+
