@@ -14,12 +14,12 @@ build:
 # Run the Docker containers
 run:
 	@ ${INFO} "Running the Docker containers"
-	@ docker-compose -f $(DOCKER_COMPOSE_FILE) up -d db go-test
+	@ docker-compose -f $(DOCKER_COMPOSE_FILE) up db go-test
 	@ ${INFO} "Docker containers running successfully"
 	@ echo " "
 
 # Run the tests
-test:build
+test:run
 	@ ${INFO} "Running tests"
 	@ docker-compose -f $(DOCKER_COMPOSE_FILE) exec go-test go test -v  
 	@ ${INFO} "Tests completed successfully"
