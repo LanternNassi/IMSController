@@ -18,12 +18,12 @@ services:
       timeout: 5s
       retries: 5
 
-  go-test:
+  go_test:
     build:
       context: .
       dockerfile: Dockerfile
       target: builder
-    container_name: go-test
+    container_name: go_test
     environment:
       - test_DBHOST=db
       - test_DBNAME=testdb

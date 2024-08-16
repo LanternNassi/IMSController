@@ -9,11 +9,13 @@ COPY . .
 
 RUN go mod download
 
-# Build the Go application
-RUN go build -o IMSController .
 
 
 FROM builder As final
+
+# Build the Go application
+RUN go build -o IMSController .
+
 
 EXPOSE 10000
 
