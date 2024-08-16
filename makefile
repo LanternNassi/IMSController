@@ -1,23 +1,26 @@
 # Variables
-DOCKER_COMPOSE_FILE=docker-compose.yml
+DOCKER_COMPOSE_FILE := docker-compose.yml
 
-# Targets
-.PHONY: all build test clean
-
-# Default target
-all: build test
 
 # Build the Docker containers
 build:
+	@ ${INFO} "Building required docker images"
 	@docker-compose -f $(DOCKER_COMPOSE_FILE) up --build -d
+	@ ${INFO} "Docker image built successfully"
+	@ echo " "
 
 # Run the tests
 test:
+	@ ${INFO} "Running tests"
 	@docker-compose -f $(DOCKER_COMPOSE_FILE) run --rm go-test -v 
+	@ ${INFO} "Tests completed successfully"
+	@ echo " "
 
 # Clean up Docker containers
 clean:
+	@ ${INFO} "Cleaning up Docker containers"
 	@docker-compose -f $(DOCKER_COMPOSE_FILE) down -v
+	@ ${INFO} "Docker containers cleaned up successfully"
 
 # Run clean, build, and test in sequence
 rebuild-test: clean all
