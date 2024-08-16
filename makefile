@@ -12,9 +12,9 @@ build:
 	@ echo " "
 
 # Run the tests
-test:
+test:build
 	@ ${INFO} "Running tests"
-	@ docker-compose -f $(DOCKER_COMPOSE_FILE) run --rm go-test -v 
+	@ docker-compose -f $(DOCKER_COMPOSE_FILE) exec go-test go test -v  
 	@ ${INFO} "Tests completed successfully"
 	@ echo " "
 
