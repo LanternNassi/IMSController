@@ -19,9 +19,9 @@ run:
 	@ echo " "
 
 # Run the tests
-test:run
+test:build
 	@ ${INFO} "Running tests"
-	@ docker-compose -f $(DOCKER_COMPOSE_FILE) exec imscontroller-go-test-1 go test -v  
+	@ docker-compose -f $(DOCKER_COMPOSE_FILE) exec go-test go test -v  
 	@ ${INFO} "Tests completed successfully"
 	@ echo " "
 

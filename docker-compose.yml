@@ -3,6 +3,7 @@ version: '3.8'
 services:
   db:
     image: postgres:15
+    container_name: db
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -22,6 +23,7 @@ services:
       context: .
       dockerfile: Dockerfile
       target: builder
+    container_name: go-test
     environment:
       - test_DBHOST=db
       - test_DBNAME=testdb
