@@ -13,7 +13,7 @@ build:
 
 # Run the tests
 test:
-	@docker-compose -f $(DOCKER_COMPOSE_FILE) run --rm go-test
+	@docker-compose -f $(DOCKER_COMPOSE_FILE) run --rm go-test -v 
 
 # Clean up Docker containers
 clean:
