@@ -5,7 +5,7 @@ DOCKER_COMPOSE_FILE := docker-compose.yml
 # Build the Docker containers
 build:
 	@ ${INFO} "Building required docker images"
-	@docker-compose -f $(DOCKER_COMPOSE_FILE) up --build -d
+	@docker-compose -f $(DOCKER_COMPOSE_FILE) build db go-test
 	@ ${INFO} "Docker image built successfully"
 	@ echo " "
 
