@@ -1,5 +1,7 @@
 # Variables
 DOCKER_COMPOSE_FILE := docker-compose.yml
+INFO := @echo 
+
 
 
 # Build the Docker containers

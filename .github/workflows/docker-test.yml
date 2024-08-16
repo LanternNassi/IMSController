@@ -34,12 +34,12 @@ jobs:
 
       # Step 4: Build the Docker containers (optional, if your Makefile has a build step)
       - name: Build containers
-        run: docker-compose up -d
+        run: make build
 
       # Step 5: Run tests
       - name: Run tests
-        run: docker-compose exec go-test go test -v ./...
+        run: make test
 
       # Step 6: Clean up (optional)
       - name: Clean up
-        run: docker-compose down
+        run: make clean
