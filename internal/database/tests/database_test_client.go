@@ -7,7 +7,7 @@ import (
 	"github.com/LanternNassi/IMSController/internal/models"
 )
 
-func (s *DatabaseSuite) TestAddClient() {
+func (s *DatabaseSuite) Test_001_AddClient() {
 	client := models.Client{
 		FirstName:    "TestClient",
 		LastName:     "TestClient",
@@ -23,19 +23,19 @@ func (s *DatabaseSuite) TestAddClient() {
 	s.NoError(err)
 }
 
-func (s *DatabaseSuite) TestGetClients() {
+func (s *DatabaseSuite) Test_002_GetClients() {
 	clients, err := s.databaseOperations.GetClients(context.Background(), &models.Client{})
 	s.NoError(err)
 	s.Equal(1, len(clients))
 }
 
-func (s *DatabaseSuite) TestGetClientById() {
+func (s *DatabaseSuite) Test_003_GetClientById() {
 	client, err := s.databaseOperations.GetClientById(context.Background(), *s.test_client_id)
 	s.NoError(err)
 	s.Equal("TestClient", client.FirstName)
 }
 
-func (s *DatabaseSuite) TestUpdateClient() {
+func (s *DatabaseSuite) Test_004_UpdateClient() {
 	updated_client := models.Client{
 		FirstName: "UpdatedClient",
 	}

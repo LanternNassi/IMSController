@@ -7,7 +7,7 @@ import (
 	"github.com/LanternNassi/IMSController/internal/models"
 )
 
-func (s *DatabaseSuite) TestAddBackUp() {
+func (s *DatabaseSuite) Test_009_AddBackUp() {
 	backup := &models.Backup{
 		Name:   "TestBackup",
 		Backup: []byte("This is the backup"),
@@ -23,14 +23,14 @@ func (s *DatabaseSuite) TestAddBackUp() {
 
 }
 
-func (s *DatabaseSuite) TestGetBackUps() {
+func (s *DatabaseSuite) Test_010_GetBackUps() {
 	backups, err := s.databaseOperations.Getbackups(context.Background(), &models.Backup{})
 	s.NoError(err)
 	s.Equal(len(backups), 1)
 
 }
 
-func (s *DatabaseSuite) TestGetBackUpById() {
+func (s *DatabaseSuite) Test_011_GetBackUpById() {
 	backup, err := s.databaseOperations.GetBackUpById(context.Background(), strconv.FormatUint(uint64(s.test_backup_id), 10))
 	s.NoError(err)
 	s.Equal(backup.Name, "TestBackup")

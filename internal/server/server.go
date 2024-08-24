@@ -19,14 +19,14 @@ type EchoServer struct {
 	DB   interfaces.DataBaseClient
 }
 
-func NewEchoServer(db interfaces.DataBaseClient) interfaces.Server {
+func NewEchoServer(db interfaces.DataBaseClient) (interfaces.Server, *echo.Echo) {
 	server := &EchoServer{
 		echo: echo.New(),
 		DB:   db,
 	}
 
 	server.registerRoutes()
-	return server
+	return server, server.echo
 
 }
 

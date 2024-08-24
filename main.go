@@ -57,7 +57,7 @@ func main() {
 
 	}
 
-	server := server.NewEchoServer(client)
+	server, _ := server.NewEchoServer(client)
 
 	starting_error := server.Start()
 
