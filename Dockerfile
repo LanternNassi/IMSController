@@ -1,50 +1,55 @@
-FROM golang:latest As builder
+# Stage 1: Build the Go application
+FROM golang:latest AS builder
 
 WORKDIR /app
 
+# Copy source code
 COPY . .
 
+# Build-time environment variables
 ARG DBHOST
 ARG DBPORT
 ARG DBUSER
 ARG DBPASSWORD
 ARG DBNAME
-ARG APPHOST
+ARG APPHOST=0.0.0.0:10000
 
-ARG test_DBHOST
-ARG test_DBPORT
-ARG test_DBUSER
-ARG test_DBPASSWORD
-ARG test_DBNAME
+ARG test_DBHOST=db
+ARG test_DBPORT=5432
+ARG test_DBUSER=postgres
+ARG test_DBPASSWORD=postgres
+ARG test_DBNAME=testdb
 
-RUN echo "DBHOST=${DBHOST}" >> .env
-RUN echo "DBPORT=${DBPORT}" >> .env
-RUN echo "DBUSER=${DBUSER}" >> .env
-RUN echo "DBPASSWORD=${DBPASSWORD}" >> .env
-RUN echo "DBNAME=${DBNAME}" >> .env
-RUN echo "APPHOST=0.0.0.0:10000" >> .env
+# Create .env file with the required values
+RUN echo "DBHOST=${DBHOST}" >> .env && \
+    echo "DBPORT=${DBPORT}" >> .env && \
+    echo "DBUSER=${DBUSER}" >> .env && \
+    echo "DBPASSWORD=${DBPASSWORD}" >> .env && \
+    echo "DBNAME=${DBNAME}" >> .env && \
+    echo "APPHOST=${APPHOST}" >> .env && \
+    echo "test_DBHOST=${test_DBHOST}" >> .env && \
+    echo "test_DBPORT=${test_DBPORT}" >> .env && \
+    echo "test_DBUSER=${test_DBUSER}" >> .env && \
+    echo "test_DBPASSWORD=${test_DBPASSWORD}" >> .env && \
+    echo "test_DBNAME=${test_DBNAME}" >> .env
 
-RUN echo "test_DBHOST=db" >> .env
-RUN echo "test_DBPORT=5432" >> .env
-RUN echo "test_DBUSER=postgres" >> .env
-RUN echo "test_DBPASSWORD=postgres" >> .env
-RUN echo "test_DBNAME=testdb" >> .env
-
-
-
+# Download dependencies
 RUN go mod download
 
-
-
-FROM builder As final
-
+# Build the application
 RUN go build -o IMSController .
 
+# Stage 2: Final image
+FROM alpine:latest AS final
 
+WORKDIR /app
+
+# Copy the compiled binary and .env file from the builder stage
+COPY --from=builder /app/IMSController .
+COPY --from=builder /app/.env .
+
+# Expose the application port
 EXPOSE 10000
 
+# Run the application
 CMD ["./IMSController"]
-
-
-
-
