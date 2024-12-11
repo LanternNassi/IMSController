@@ -4,33 +4,6 @@ FROM golang:latest AS builder
 WORKDIR /app
 
 
-# Build-time environment variables
-ARG DBHOST
-ARG DBPORT
-ARG DBUSER
-ARG DBPASSWORD
-ARG DBNAME
-ARG APPHOST=0.0.0.0:10000
-
-ARG test_DBHOST=db
-ARG test_DBPORT=5432
-ARG test_DBUSER=postgres
-ARG test_DBPASSWORD=postgres
-ARG test_DBNAME=testdb
-
-# Create .env file with the required values
-RUN echo "DBHOST=${DBHOST}" >> .env && \
-    echo "DBPORT=${DBPORT}" >> .env && \
-    echo "DBUSER=${DBUSER}" >> .env && \
-    echo "DBPASSWORD=${DBPASSWORD}" >> .env && \
-    echo "DBNAME=${DBNAME}" >> .env && \
-    echo "APPHOST=${APPHOST}" >> .env && \
-    echo "test_DBHOST=${test_DBHOST}" >> .env && \
-    echo "test_DBPORT=${test_DBPORT}" >> .env && \
-    echo "test_DBUSER=${test_DBUSER}" >> .env && \
-    echo "test_DBPASSWORD=${test_DBPASSWORD}" >> .env && \
-    echo "test_DBNAME=${test_DBNAME}" >> .env
-
 # Copy source code
 COPY . .
 

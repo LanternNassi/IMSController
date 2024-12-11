@@ -62,3 +62,10 @@ jobs:
             DBPASSWORD=${{secrets.DBPASSWORD}}
             DBUSER=${{secrets.DBUSER}}
             DBPORT=${{secrets.DBPORT}}
+            APPHOST=0.0.0.0:10000
+            test_DBHOST=db
+            test_DBNAME=testdb
+            test_DBPASSWORD=postgres
+            test_DBUSER=postgres
+            test_DBPORT=5432
+

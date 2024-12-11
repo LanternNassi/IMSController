@@ -31,7 +31,7 @@ func (s *DatabaseSuite) SetupSuite() {
 	//Test Database setup
 	err_env := godotenv.Load(".env")
 	if err_env != nil {
-		log.Fatalf("Error loading environment variables file")
+		fmt.Println("Error loading environment variables file... Proceeding to use default values")
 	}
 	dbport, err_conv := strconv.Atoi(os.Getenv("test_DBPORT"))
 	if err_conv != nil {
