@@ -3,8 +3,6 @@ FROM golang:latest AS builder
 
 WORKDIR /app
 
-# Copy source code
-COPY . .
 
 # Build-time environment variables
 ARG DBHOST
@@ -32,6 +30,10 @@ RUN echo "DBHOST=${DBHOST}" >> .env && \
     echo "test_DBUSER=${test_DBUSER}" >> .env && \
     echo "test_DBPASSWORD=${test_DBPASSWORD}" >> .env && \
     echo "test_DBNAME=${test_DBNAME}" >> .env
+
+# Copy source code
+COPY . .
+
 
 # Download dependencies
 RUN go mod download
