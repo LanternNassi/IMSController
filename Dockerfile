@@ -1,26 +1,30 @@
-# Use the official Golang image
-FROM golang:latest As builder
+# Stage 1: Build the Go application
+FROM golang:latest AS builder
 
-# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the local package files to the container's workspace
+
+# Copy source code
 COPY . .
 
+
+# Download dependencies
 RUN go mod download
 
-
-
-FROM builder As final
-
-# Build the Go application
+# Build the application
 RUN go build -o IMSController .
 
+# Stage 2: Final image
+FROM alpine:latest AS final
 
+WORKDIR /app
+
+# Copy the compiled binary and .env file from the builder stage
+COPY --from=builder /app/IMSController .
+COPY --from=builder /app/.env .
+
+# Expose the application port
 EXPOSE 10000
 
+# Run the application
 CMD ["./IMSController"]
-
-
-
-

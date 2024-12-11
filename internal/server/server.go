@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -34,7 +35,7 @@ func (s *EchoServer) Start() error {
 
 	err_env := godotenv.Load(".env")
 	if err_env != nil {
-		log.Fatalf("Error loading environment variables file")
+		fmt.Println("Error loading environment variables file... Proceeding to use default values")
 	}
 
 	if err := s.echo.Start(os.Getenv("APPHOST")); err != nil && err != http.ErrServerClosed {
@@ -76,7 +77,6 @@ func (s *EchoServer) registerRoutes() {
 	bg.GET("", s.Getbackups)
 	bg.POST("", s.AddBackup)
 	bg.GET("/:id", s.GetBackUpById)
-	bg.GET("/download/:id", s.DownloadBackup)
 	bg.GET("/client/:Id", s.GetBackUpByClientId)
 	bg.GET("/bill/:bill", s.GetBackUpByBill)
 	bg.DELETE("/delete/:id", s.DeleteBackUpById)

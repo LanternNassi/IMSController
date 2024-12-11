@@ -10,33 +10,17 @@ import (
 
 func (c Client) Getbackups(ctx context.Context, params *models.Backup) ([]models.Backup, error) {
 	var backups []models.Backup
-	var trimmedbackups []models.Backup
-
 	result := c.DB.WithContext(ctx).Where(params).Order("ID DESC").Find(&backups)
 
-	for _, backup := range backups {
-
-		// Creating a new slice to avoid information overload during transfer
-		backup.Backup = []byte{}
-
-		trimmedbackups = append(trimmedbackups, backup)
-	}
-
-	return trimmedbackups, result.Error
+	return backups, result.Error
 }
 
 func (c Client) GetBackUpsByDate(ctx context.Context, field string, comparator string, time_var time.Time) ([]models.Backup, error) {
 	var backups []models.Backup
-	var trimmedbackups []models.Backup
 
 	result := c.DB.WithContext(ctx).Where(field+comparator+"?", time_var).Order("ID DESC").Find(&backups)
 
-	for _, backup := range backups {
-		backup.Backup = []byte{}
-
-		trimmedbackups = append(trimmedbackups, backup)
-	}
-	return trimmedbackups, result.Error
+	return backups, result.Error
 }
 
 func (c Client) AddBackup(ctx context.Context, backup *models.Backup) (*models.Backup, error) {

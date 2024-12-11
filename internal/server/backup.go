@@ -11,9 +11,6 @@ import (
 	"github.com/labstack/echo"
 
 	"github.com/shopspring/decimal"
-
-	"io"
-	"mime/multipart"
 )
 
 func (s *EchoServer) Getbackups(ctx echo.Context) error {
@@ -34,31 +31,6 @@ func (s *EchoServer) Getbackups(ctx echo.Context) error {
 }
 
 func (s *EchoServer) AddBackup(ctx echo.Context) error {
-
-	//Handling file upload
-	max_limit_err := ctx.Request().ParseMultipartForm(10 << 20)
-
-	if max_limit_err != nil {
-		return ctx.JSON(http.StatusBadRequest, max_limit_err)
-	}
-
-	//Retrieving the file
-	file, handler, file_err := ctx.Request().FormFile("file")
-	if file_err != nil {
-		return ctx.JSON(http.StatusBadRequest, file_err)
-	}
-
-	defer func(file multipart.File) {
-		file.Close()
-
-	}(file)
-
-	// Read the content of the file
-	fileBytes, content_err := io.ReadAll(file)
-
-	if content_err != nil {
-		return ctx.JSON(http.StatusBadRequest, content_err)
-	}
 
 	backup := new(models.Backup)
 	if err := ctx.Bind(backup); err != nil {
@@ -111,18 +83,15 @@ func (s *EchoServer) AddBackup(ctx echo.Context) error {
 	_bill.BackupCount += 1
 
 	//Adding to the bill backup size
-	_bill.BackupSize += handler.Size
+	_bill.BackupSize += backup.Size
 
 	//Adding the cost based on the size (each byte costing 0.001 to 0.002 UGx)
-	_bill.TotalCost = _bill.TotalCost.Add(decimal.NewFromFloat(float64(handler.Size) * 0.0018273998877))
+	_bill.TotalCost = _bill.TotalCost.Add(decimal.NewFromFloat(float64(backup.Size) * 0.0018273998877))
 
 	//Updating the bill
 	_bill, _ = s.DB.UpdateBill(ctx.Request().Context(), _bill, strconv.FormatUint(uint64(_bill.ID), 10))
 
 	// Adding the file specifications to the model
-	backup.Name = handler.Filename
-	backup.Size = handler.Size
-	backup.Backup = fileBytes
 	backup.Bill = _bill.ID
 
 	backup, err := s.DB.AddBackup(ctx.Request().Context(), backup)
@@ -187,19 +156,4 @@ func (s *EchoServer) GetBackUpByBill(ctx echo.Context) error {
 	}
 
 	return ctx.JSON(http.StatusOK, backups)
-}
-
-func (s *EchoServer) DownloadBackup(ctx echo.Context) error {
-	id := ctx.Param("id")
-
-	backup, err := s.DB.GetBackUpById(ctx.Request().Context(), id)
-
-	if err != nil {
-		return ctx.JSON(http.StatusInternalServerError, err)
-	}
-
-	ctx.Response().Header().Set("Content-Disposition", "attachment; filename="+backup.Name)
-
-	return ctx.Blob(http.StatusOK, "application/octet-stream", backup.Backup)
-
 }
