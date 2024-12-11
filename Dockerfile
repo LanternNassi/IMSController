@@ -21,7 +21,6 @@ WORKDIR /app
 
 # Copy the compiled binary and .env file from the builder stage
 COPY --from=builder /app/IMSController .
-COPY --from=builder /app/.env .
 
 # Expose the application port
 EXPOSE 10000
