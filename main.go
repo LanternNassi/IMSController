@@ -26,7 +26,7 @@ func main() {
 		fmt.Println("Error converting string to int:", err_conv)
 	}
 
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=%s", os.Getenv("DBHOST"), os.Getenv("DBUSER"), os.Getenv("DBPASSWORD"), os.Getenv("DBNAME"), dbport, "disable")
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=%s", os.Getenv("DBHOST"), os.Getenv("DBUSER"), os.Getenv("DBPASSWORD"), os.Getenv("DBNAME"), dbport, os.Getenv("SSLMODE"))
 
 	client, _, err := database.NewDatabaseClient(dsn)
 
