@@ -10,7 +10,7 @@ import (
 func (s *DatabaseSuite) Test_009_AddBackUp() {
 	backup := &models.Backup{
 		Name:   "TestBackup",
-		Backup: []byte("This is the backup"),
+		Backup: "https://testbackup.com",
 		Size:   9,
 		Bill:   20,
 	}

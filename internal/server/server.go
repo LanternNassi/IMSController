@@ -76,7 +76,6 @@ func (s *EchoServer) registerRoutes() {
 	bg.GET("", s.Getbackups)
 	bg.POST("", s.AddBackup)
 	bg.GET("/:id", s.GetBackUpById)
-	bg.GET("/download/:id", s.DownloadBackup)
 	bg.GET("/client/:Id", s.GetBackUpByClientId)
 	bg.GET("/bill/:bill", s.GetBackUpByBill)
 	bg.DELETE("/delete/:id", s.DeleteBackUpById)
