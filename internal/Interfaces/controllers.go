@@ -17,6 +17,12 @@ type DataBaseClient interface {
 	Ready() bool
 	Migrate() error
 
+	AddUser(ctx context.Context, params *models.User) (*models.User, error)
+	GetUsers(ctx context.Context, params *models.User) ([]models.User, error)
+	UpdateUser(ctx context.Context, user *models.User, id string) (*models.User, error)
+	GetUserById(ctx context.Context, id string) (*models.User, error)
+	DeleteUser(ctx context.Context, id string) error
+
 	GetClients(ctx context.Context, params *models.Client) ([]models.Client, error)
 	AddClient(ctx context.Context, client *models.Client) (*models.Client, error)
 	UpdateClient(ctx context.Context, client *models.Client, id string) (*models.Client, error)
@@ -52,6 +58,13 @@ type Server interface {
 	Start() error
 	Readiness(ctx echo.Context) error
 	Liveness(ctx echo.Context) error
+
+	Login(ctx echo.Context) error
+
+	AddUser(ctx echo.Context) error
+	GetUserById(ctx echo.Context) error
+	GetUsers(ctx echo.Context) error
+	DeleteUser(ctx echo.Context) error
 
 	GetClients(ctx echo.Context) error
 	AddClient(ctx echo.Context) error

@@ -8,7 +8,7 @@ import (
 	"github.com/shopspring/decimal"
 )
 
-func (s *DatabaseSuite) Test_012_AddBill() {
+func (s *DatabaseSuite) Test_009_AddBill() {
 	_bill := &models.Bill{
 		ClientID:    *s.test_client_id,
 		BackupCount: 1,
@@ -23,7 +23,7 @@ func (s *DatabaseSuite) Test_012_AddBill() {
 	s.Equal(_bill, created_bill)
 }
 
-func (s *DatabaseSuite) Test_013_GetBills() {
+func (s *DatabaseSuite) Test_010_GetBills() {
 	bills, err := s.databaseOperations.GetBills(context.Background(), &models.Bill{})
 
 	s.NoError(err)
@@ -31,14 +31,14 @@ func (s *DatabaseSuite) Test_013_GetBills() {
 
 }
 
-func (s *DatabaseSuite) Test_014_GetBillById() {
+func (s *DatabaseSuite) Test_011_GetBillById() {
 	bill, err := s.databaseOperations.GetBillById(context.Background(), strconv.FormatUint(uint64(s.test_bill_id), 10))
 
 	s.NoError(err)
 	s.Equal(int64(20), bill.BackupSize)
 }
 
-func (s *DatabaseSuite) Test_015_UpdateBill() {
+func (s *DatabaseSuite) Test_012_UpdateBill() {
 	update_bill, err := s.databaseOperations.UpdateBill(context.Background(), &models.Bill{BackupSize: 200}, strconv.FormatUint(uint64(s.test_bill_id), 10))
 
 	s.NoError(err)

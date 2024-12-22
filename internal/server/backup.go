@@ -40,7 +40,7 @@ func (s *EchoServer) AddBackup(ctx echo.Context) error {
 
 	var _bill *models.Bill
 
-	if backup.Bill == 0 {
+	if backup.Bill.ID == 0 {
 
 		//Creating a new  bill or determining the bill to append the backup
 
@@ -69,7 +69,7 @@ func (s *EchoServer) AddBackup(ctx echo.Context) error {
 		}
 
 	} else {
-		bill, bill_err := s.DB.GetBillById(ctx.Request().Context(), strconv.FormatUint(uint64(backup.Bill), 10))
+		bill, bill_err := s.DB.GetBillById(ctx.Request().Context(), strconv.FormatUint(uint64(backup.Bill.ID), 10))
 
 		if bill_err != nil {
 			return ctx.JSON(http.StatusBadGateway, bill_err)
@@ -92,7 +92,7 @@ func (s *EchoServer) AddBackup(ctx echo.Context) error {
 	_bill, _ = s.DB.UpdateBill(ctx.Request().Context(), _bill, strconv.FormatUint(uint64(_bill.ID), 10))
 
 	// Adding the file specifications to the model
-	backup.Bill = _bill.ID
+	backup.Bill = *_bill
 
 	backup, err := s.DB.AddBackup(ctx.Request().Context(), backup)
 	if err != nil {
@@ -149,7 +149,7 @@ func (s *EchoServer) GetBackUpByBill(ctx echo.Context) error {
 		return ctx.JSON(http.StatusBadRequest, err)
 	}
 
-	backups, err := s.DB.Getbackups(ctx.Request().Context(), &models.Backup{Bill: uint(conv_bill)})
+	backups, err := s.DB.Getbackups(ctx.Request().Context(), &models.Backup{BillID: uint(conv_bill)})
 
 	if err != nil {
 		return ctx.JSON(http.StatusInternalServerError, err)

@@ -6,9 +6,10 @@ import (
 
 type Backup struct {
 	gorm.Model
-	ClientID string `gorm:"primaryKey" json:"ClientID"`
+	ClientID string `json:"ClientID"`
 	Name     string `json:"Name"`
 	Backup   string `json:"Backup"`
 	Size     int64  `json:"Size"`
-	Bill     uint   `json:"Bill"`
+	BillID   uint   `gorm:"index" json:"BillID"`
+	Bill     Bill   `gorm:"foreignKey:BillID;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"Bill"`
 }
