@@ -3,21 +3,28 @@ DOCKER_COMPOSE_FILE := docker-compose.yml
 INFO := @echo 
 
 # Build the Docker containers
-build:
-	@ ${INFO} "Building required docker images"
-	@ docker-compose -f $(DOCKER_COMPOSE_FILE) build db go_test
-	@ ${INFO} "Docker image built successfully"
+buildTest:
+	@ ${INFO} "Building required docker images for Testing"
+	@ docker-compose -f $(DOCKER_COMPOSE_FILE) build go_test test_db
+	@ ${INFO} "Docker images built successfully"
 	@ echo " "
 
+buildAPI:
+	@ ${INFO} "Building required docker images for the API"
+	@ docker-compose -f $(DOCKER_COMPOSE_FILE) build --no-cache db go_api
+	@ ${INFO} "Docker images built successfully"
+	@ echo " "
+
+
 # Run the Docker containers
-run:
+run:buildAPI
 	@ ${INFO} "Running the Docker containers"
-	@ docker-compose -f $(DOCKER_COMPOSE_FILE) up -d db go_test
+	@ docker-compose -f $(DOCKER_COMPOSE_FILE) up db go_api
 	@ ${INFO} "Docker containers running successfully"
 	@ echo " "
 
 # Run the tests
-test: build
+test:buildTest
 	@ ${INFO} "Running tests"
 	@ docker-compose -f $(DOCKER_COMPOSE_FILE) run --rm go_test go test -v -coverprofile=coverage.txt
 	@ ${INFO} "Tests completed successfully"
