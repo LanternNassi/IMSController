@@ -17,14 +17,14 @@ buildAPI:
 
 
 # Run the Docker containers
-run:buildAPI
+run:
 	@ ${INFO} "Running the Docker containers"
 	@ docker-compose -f $(DOCKER_COMPOSE_FILE) up db go_api
 	@ ${INFO} "Docker containers running successfully"
 	@ echo " "
 
 # Run the tests
-test:buildTest
+test:
 	@ ${INFO} "Running tests"
 	@ docker-compose -f $(DOCKER_COMPOSE_FILE) run --rm go_test go test -v -coverprofile=coverage.txt
 	@ ${INFO} "Tests completed successfully"
