@@ -6,7 +6,7 @@ import (
 
 type Installation struct {
 	gorm.Model
-	ClientID          string `json:"ClientID"`
+	ClientID          string `gorm:"index" json:"ClientID"`
 	Installation_type string `json:"Installation_type"`
 	Computer_name     string `json:"Computer_name"`
 	IMS_version       string `json:"IMS_version"`

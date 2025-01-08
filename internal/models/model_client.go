@@ -3,21 +3,21 @@ package models
 import (
 	"math/rand"
 	"time"
-
-	"gorm.io/gorm"
 )
 
 type Client struct {
-	gorm.Model
-	ClientID     string    `gorm:"primaryKey" json:"ClientID"`
-	FirstName    string    `json:"FirstName"`
-	LastName     string    `json:"LastName"`
-	Email        string    `json:"Email"`
-	Phone        string    `json:"Phone"`
-	Address      string    `json:"Address"`
-	BusinessName string    `json:"BusinessName"`
-	Status       string    `json:"Status"`
-	ValidTill    time.Time `json:"ValidTill"`
+	ClientID      string         `gorm:"primaryKey" json:"ClientID"`
+	FirstName     string         `json:"FirstName"`
+	LastName      string         `json:"LastName"`
+	Email         string         `json:"Email"`
+	Phone         string         `json:"Phone"`
+	Address       string         `json:"Address"`
+	BusinessName  string         `json:"BusinessName"`
+	Status        string         `json:"Status"`
+	ValidTill     time.Time      `json:"ValidTill"`
+	Installations []Installation `gorm:"foreignKey:ClientID;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"Installations"`
+	Bills         []Bill         `gorm:"foreignKey:ClientID;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"Bills"`
+	Backups       []Backup       `gorm:"foreignKey:ClientID;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"Backups"`
 }
 
 func (c *Client) CreateUniqueID() {

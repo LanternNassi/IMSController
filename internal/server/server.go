@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 
+	app_middleware "github.com/LanternNassi/IMSController/internal/middleware"
 	"github.com/LanternNassi/IMSController/internal/models"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/middleware"
@@ -74,22 +75,29 @@ func (s *EchoServer) registerRoutes() {
 	cg.GET("/:id", s.GetClientById)
 
 	bg := s.echo.Group("/backups")
-	bg.GET("", s.Getbackups)
-	bg.POST("", s.AddBackup)
-	bg.GET("/:id", s.GetBackUpById)
-	bg.GET("/client/:Id", s.GetBackUpByClientId)
-	bg.GET("/bill/:bill", s.GetBackUpByBill)
-	bg.DELETE("/delete/:id", s.DeleteBackUpById)
+	bg.GET("", s.Getbackups, app_middleware.AuthenticationMiddleware())
+	bg.POST("", s.AddBackup, app_middleware.AuthenticationMiddleware())
+	bg.GET("/:id", s.GetBackUpById, app_middleware.AuthenticationMiddleware())
+	bg.GET("/client/:Id", s.GetBackUpByClientId, app_middleware.AuthenticationMiddleware())
+	bg.GET("/bill/:bill", s.GetBackUpByBill, app_middleware.AuthenticationMiddleware())
+	bg.DELETE("/delete/:id", s.DeleteBackUpById, app_middleware.AuthenticationMiddleware())
 
 	dg := s.echo.Group("/bills")
-	dg.GET("", s.GetBills)
-	dg.POST("", s.AddBill)
-	dg.GET("/:id", s.GetBillById)
-	dg.PUT("/:id", s.UpdateBill)
-	dg.GET("/client/:ClientId", s.GetBillByClientId)
+	dg.GET("", s.GetBills, app_middleware.AuthenticationMiddleware())
+	dg.POST("", s.AddBill, app_middleware.AuthenticationMiddleware())
+	dg.GET("/:id", s.GetBillById, app_middleware.AuthenticationMiddleware())
+	dg.PUT("/:id", s.UpdateBill, app_middleware.AuthenticationMiddleware())
+	dg.GET("/client/:ClientId", s.GetBillByClientId, app_middleware.AuthenticationMiddleware())
 
 	Ig := s.echo.Group("/Installations")
 	Ig.GET("", s.GetInstallations)
 	Ig.POST("", s.AddInstallation)
 	Ig.GET("/:id", s.GetInstallationById)
+
+	Ug := s.echo.Group("/Users")
+	Ug.GET("", s.GetUsers)
+	Ug.POST("", s.AddUser)
+	Ug.POST("/login", s.Login)
+	Ug.DELETE("/:id", s.DeleteUser)
+	Ug.GET("/:id", s.GetUserById)
 }

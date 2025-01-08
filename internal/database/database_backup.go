@@ -11,7 +11,11 @@ import (
 func (c Client) Getbackups(ctx context.Context, params *models.Backup) ([]models.Backup, error) {
 	var backups []models.Backup
 	result := c.DB.WithContext(ctx).Where(params).Order("ID DESC").Find(&backups)
-
+	for i := range backups {
+		if err := c.DB.WithContext(ctx).Model(&backups[i]).Association("Bill").Find(&backups[i].Bill); err != nil {
+			return nil, err
+		}
+	}
 	return backups, result.Error
 }
 

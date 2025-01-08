@@ -64,7 +64,7 @@ func (c Client) UpdateBill(ctx context.Context, bill *models.Bill, id string) (*
 
 func (c Client) GetBillById(ctx context.Context, id string) (*models.Bill, error) {
 	bill := &models.Bill{}
-	result := c.DB.WithContext(ctx).Where("ID = ?", id).First(&bill)
+	result := c.DB.WithContext(ctx).Where("ID = ?", id).Preload("Backups").First(&bill)
 
 	if result.Error != nil {
 		return nil, result.Error

@@ -1,0 +1,9 @@
+mode: set
+github.com/LanternNassi/IMSController/main.go:15.13,19.20 2 0
+github.com/LanternNassi/IMSController/main.go:19.20,21.3 1 0
+github.com/LanternNassi/IMSController/main.go:23.2,25.21 2 0
+github.com/LanternNassi/IMSController/main.go:25.21,27.3 1 0
+github.com/LanternNassi/IMSController/main.go:29.2,55.40 4 0
+github.com/LanternNassi/IMSController/main.go:55.40,58.3 1 0
+github.com/LanternNassi/IMSController/main.go:60.2,64.27 3 0
+github.com/LanternNassi/IMSController/main.go:64.27,66.3 1 0
