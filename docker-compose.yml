@@ -62,7 +62,7 @@ services:
       - DBPASSWORD=postgres
       - DBUSER=postgres
       - DBPORT=5432
-      - APPHOST="0.0.0.0:8000"
+      - APPHOST=0.0.0.0:8000
     volumes:
       - .:/app
     command: ["go","run","."]
