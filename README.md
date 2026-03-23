@@ -1,4 +1,6 @@
 # IMS Monitoring Platform
+[![codecov](https://codecov.io/github/LanternNassi/IMSController/graph/badge.svg?token=CNQWETJJD8)](https://codecov.io/github/LanternNassi/IMSController)
+
 This is a web API used to monitor and perform certain actions related to the [IMS business solution](https://github.com/LanternNassi/IMS), such as backing up clients' SQL Server local databases and tracking their payments. The IMS desktop application periodically (`1 day` , `1 week`) sends created backup files of the local databases to this API server, which then calculates the backup parameters, including the individual cost of the backup. Additionally, it holds information about clients and the type of IMS desktop application instances they are running, whether multi-instance or single-instance.
 
 ## Features included 
