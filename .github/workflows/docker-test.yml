@@ -33,6 +33,9 @@ jobs:
       - name: Run tests
         run: make test
 
+      - name: Run BDD Tests
+        run: make test-godog-coverage
+
       - name: Upload results to Codecov
         uses: codecov/codecov-action@v4
         with:
