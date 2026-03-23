@@ -105,6 +105,10 @@ func (s *EchoServer) Login(ctx echo.Context) error {
 		Email: details.Email,
 	})
 
+	if (len(user) == 0) || err != nil {
+		return ctx.JSON(http.StatusUnauthorized, "Invalid password or username")
+	}
+
 	if err != nil {
 		return ctx.JSON(http.StatusBadRequest, err)
 	}
@@ -112,7 +116,7 @@ func (s *EchoServer) Login(ctx echo.Context) error {
 	is_valid, err := utils.ValidPassword(details.Password, user[0].Password)
 
 	if err != nil {
-		return ctx.JSON(http.StatusBadRequest, err)
+		return ctx.JSON(http.StatusUnauthorized, "Invalid password or username")
 	}
 
 	if !is_valid {

@@ -50,17 +50,42 @@ func (s *EchoServer) UpdateClient(ctx echo.Context) error {
 		ValidTill string
 	}
 
-	client := new(models.Client)
-	if err := ctx.Bind(client); err != nil {
+	// Read body once and parse manually to avoid EOF on second bind
+	var requestData map[string]interface{}
+	if err := ctx.Bind(&requestData); err != nil {
 		return ctx.JSON(http.StatusBadRequest, err)
+	}
+
+	// Parse into Client struct
+	client := new(models.Client)
+	if firstName, ok := requestData["FirstName"].(string); ok {
+		client.FirstName = firstName
+	}
+	if lastName, ok := requestData["LastName"].(string); ok {
+		client.LastName = lastName
+	}
+	if email, ok := requestData["Email"].(string); ok {
+		client.Email = email
+	}
+	if phone, ok := requestData["Phone"].(string); ok {
+		client.Phone = phone
+	}
+	if address, ok := requestData["Address"].(string); ok {
+		client.Address = address
+	}
+	if businessName, ok := requestData["BusinessName"].(string); ok {
+		client.BusinessName = businessName
+	}
+	if status, ok := requestData["Status"].(string); ok {
+		client.Status = status
 	}
 
 	active_client, _ := s.DB.GetClientById(ctx.Request().Context(), ID)
 
-	//Working on the data gotten
+	// Parse Date struct from the same request data
 	Date_stamp := new(Date)
-	if date_err := ctx.Bind(Date_stamp); date_err != nil {
-		return ctx.JSON(http.StatusBadRequest, date_err)
+	if validTill, ok := requestData["ValidTill"].(string); ok {
+		Date_stamp.ValidTill = validTill
 	}
 
 	if Date_stamp.ValidTill != "" {

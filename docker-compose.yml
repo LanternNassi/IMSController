@@ -46,6 +46,8 @@ services:
       - test_DBUSER=postgres
       - test_DBPORT=5432
     working_dir: /app
+    volumes:
+      - .:/app
     depends_on:
       test_db:
         condition: service_healthy
