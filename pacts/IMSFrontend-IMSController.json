@@ -1,0 +1,1436 @@
+{
+  "consumer": {
+    "name": "IMSFrontend"
+  },
+  "interactions": [
+    {
+      "description": "a DELETE request to remove a user",
+      "providerState": "a user with ID 1 exists",
+      "request": {
+        "method": "DELETE",
+        "path": "/Users/1"
+      },
+      "response": {
+        "body": "User deleted successfully",
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          },
+          "$.headers['Content-Type']": {
+            "match": "type"
+          }
+        },
+        "status": 202
+      }
+    },
+    {
+      "description": "a GET request for all clients",
+      "providerState": "clients exist",
+      "request": {
+        "method": "GET",
+        "path": "/clients"
+      },
+      "response": {
+        "body": [
+          {
+            "Address": "123 Main St",
+            "BusinessName": "ACME Corp",
+            "ClientID": "abc123",
+            "Email": "john@example.com",
+            "FirstName": "John",
+            "LastName": "Doe",
+            "Phone": "+256700000000",
+            "Status": "connected",
+            "ValidTill": "2025-01-01T00:00:00Z"
+          }
+        ],
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type",
+            "min": 1
+          },
+          "$.body[*].Address": {
+            "match": "type"
+          },
+          "$.body[*].BusinessName": {
+            "match": "type"
+          },
+          "$.body[*].ClientID": {
+            "match": "type"
+          },
+          "$.body[*].Email": {
+            "match": "type"
+          },
+          "$.body[*].FirstName": {
+            "match": "type"
+          },
+          "$.body[*].LastName": {
+            "match": "type"
+          },
+          "$.body[*].Phone": {
+            "match": "type"
+          },
+          "$.body[*].Status": {
+            "match": "type"
+          },
+          "$.body[*].ValidTill": {
+            "match": "type"
+          },
+          "$.headers['Content-Type']": {
+            "match": "type"
+          }
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "a GET request for all installations",
+      "providerState": "installations exist",
+      "request": {
+        "method": "GET",
+        "path": "/Installations"
+      },
+      "response": {
+        "body": [
+          {
+            "Active": "true",
+            "ClientID": "abc123",
+            "Computer_name": "DESKTOP-001",
+            "CreatedAt": "2024-01-01T00:00:00Z",
+            "ID": 1,
+            "IMS_version": "1.0.0",
+            "Installation_type": "server",
+            "Operating_system": "Windows 11",
+            "Processor": "Intel Core i7",
+            "RAM": "16GB",
+            "UpdatedAt": "2024-01-01T00:00:00Z"
+          }
+        ],
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type",
+            "min": 1
+          },
+          "$.body[*].Active": {
+            "match": "type"
+          },
+          "$.body[*].ClientID": {
+            "match": "type"
+          },
+          "$.body[*].Computer_name": {
+            "match": "type"
+          },
+          "$.body[*].CreatedAt": {
+            "match": "type"
+          },
+          "$.body[*].ID": {
+            "match": "type"
+          },
+          "$.body[*].IMS_version": {
+            "match": "type"
+          },
+          "$.body[*].Installation_type": {
+            "match": "type"
+          },
+          "$.body[*].Operating_system": {
+            "match": "type"
+          },
+          "$.body[*].Processor": {
+            "match": "type"
+          },
+          "$.body[*].RAM": {
+            "match": "type"
+          },
+          "$.body[*].UpdatedAt": {
+            "match": "type"
+          },
+          "$.headers['Content-Type']": {
+            "match": "type"
+          }
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "a GET request for all users",
+      "providerState": "users exist",
+      "request": {
+        "method": "GET",
+        "path": "/Users"
+      },
+      "response": {
+        "body": [
+          {
+            "CreatedAt": "2024-01-01T00:00:00Z",
+            "Email": "john@example.com",
+            "ID": 1,
+            "UpdatedAt": "2024-01-01T00:00:00Z",
+            "Username": "johndoe",
+            "Verified": false
+          }
+        ],
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type",
+            "min": 1
+          },
+          "$.body[*].CreatedAt": {
+            "match": "type"
+          },
+          "$.body[*].Email": {
+            "match": "type"
+          },
+          "$.body[*].ID": {
+            "match": "type"
+          },
+          "$.body[*].UpdatedAt": {
+            "match": "type"
+          },
+          "$.body[*].Username": {
+            "match": "type"
+          },
+          "$.body[*].Verified": {
+            "match": "type"
+          },
+          "$.headers['Content-Type']": {
+            "match": "type"
+          }
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "a GET request for client by ID",
+      "providerState": "a client with ID test-client-id exists",
+      "request": {
+        "method": "GET",
+        "path": "/clients/test-client-id"
+      },
+      "response": {
+        "body": {
+          "Address": "123 Main St",
+          "BusinessName": "ACME Corp",
+          "ClientID": "abc123",
+          "Email": "john@example.com",
+          "FirstName": "John",
+          "LastName": "Doe",
+          "Phone": "+256700000000",
+          "Status": "connected",
+          "ValidTill": "2025-01-01T00:00:00Z"
+        },
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "matchingRules": {
+          "$.body.Address": {
+            "match": "type"
+          },
+          "$.body.BusinessName": {
+            "match": "type"
+          },
+          "$.body.ClientID": {
+            "match": "type"
+          },
+          "$.body.Email": {
+            "match": "type"
+          },
+          "$.body.FirstName": {
+            "match": "type"
+          },
+          "$.body.LastName": {
+            "match": "type"
+          },
+          "$.body.Phone": {
+            "match": "type"
+          },
+          "$.body.Status": {
+            "match": "type"
+          },
+          "$.body.ValidTill": {
+            "match": "type"
+          },
+          "$.headers['Content-Type']": {
+            "match": "type"
+          }
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "a GET request for installation by ID",
+      "providerState": "an installation with ID 1 exists",
+      "request": {
+        "method": "GET",
+        "path": "/Installations/1"
+      },
+      "response": {
+        "body": {
+          "Active": "true",
+          "ClientID": "abc123",
+          "Computer_name": "DESKTOP-001",
+          "CreatedAt": "2024-01-01T00:00:00Z",
+          "ID": 1,
+          "IMS_version": "1.0.0",
+          "Installation_type": "server",
+          "Operating_system": "Windows 11",
+          "Processor": "Intel Core i7",
+          "RAM": "16GB",
+          "UpdatedAt": "2024-01-01T00:00:00Z"
+        },
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "matchingRules": {
+          "$.body.Active": {
+            "match": "type"
+          },
+          "$.body.ClientID": {
+            "match": "type"
+          },
+          "$.body.Computer_name": {
+            "match": "type"
+          },
+          "$.body.CreatedAt": {
+            "match": "type"
+          },
+          "$.body.ID": {
+            "match": "type"
+          },
+          "$.body.IMS_version": {
+            "match": "type"
+          },
+          "$.body.Installation_type": {
+            "match": "type"
+          },
+          "$.body.Operating_system": {
+            "match": "type"
+          },
+          "$.body.Processor": {
+            "match": "type"
+          },
+          "$.body.RAM": {
+            "match": "type"
+          },
+          "$.body.UpdatedAt": {
+            "match": "type"
+          },
+          "$.headers['Content-Type']": {
+            "match": "type"
+          }
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "a GET request for user by ID",
+      "providerState": "a user with ID 1 exists",
+      "request": {
+        "method": "GET",
+        "path": "/Users/1"
+      },
+      "response": {
+        "body": {
+          "CreatedAt": "2024-01-01T00:00:00Z",
+          "Email": "john@example.com",
+          "ID": 1,
+          "UpdatedAt": "2024-01-01T00:00:00Z",
+          "Username": "johndoe",
+          "Verified": false
+        },
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "matchingRules": {
+          "$.body.CreatedAt": {
+            "match": "type"
+          },
+          "$.body.Email": {
+            "match": "type"
+          },
+          "$.body.ID": {
+            "match": "type"
+          },
+          "$.body.UpdatedAt": {
+            "match": "type"
+          },
+          "$.body.Username": {
+            "match": "type"
+          },
+          "$.body.Verified": {
+            "match": "type"
+          },
+          "$.headers['Content-Type']": {
+            "match": "type"
+          }
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "a POST request to create a client",
+      "providerState": "a new client can be registered",
+      "request": {
+        "body": {
+          "Address": "123 Main St",
+          "BusinessName": "ACME Corp",
+          "Email": "john@example.com",
+          "FirstName": "John",
+          "LastName": "Doe",
+          "Phone": "+256700000000",
+          "Status": "connected"
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "matchingRules": {
+          "$.body.Address": {
+            "match": "type"
+          },
+          "$.body.BusinessName": {
+            "match": "type"
+          },
+          "$.body.Email": {
+            "match": "type"
+          },
+          "$.body.FirstName": {
+            "match": "type"
+          },
+          "$.body.LastName": {
+            "match": "type"
+          },
+          "$.body.Phone": {
+            "match": "type"
+          },
+          "$.body.Status": {
+            "match": "type"
+          },
+          "$.headers['Content-Type']": {
+            "match": "type"
+          }
+        },
+        "method": "POST",
+        "path": "/clients"
+      },
+      "response": {
+        "body": {
+          "Address": "123 Main St",
+          "BusinessName": "ACME Corp",
+          "ClientID": "abc123",
+          "Email": "john@example.com",
+          "FirstName": "John",
+          "LastName": "Doe",
+          "Phone": "+256700000000",
+          "Status": "connected",
+          "ValidTill": "2025-01-01T00:00:00Z"
+        },
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "matchingRules": {
+          "$.body.Address": {
+            "match": "type"
+          },
+          "$.body.BusinessName": {
+            "match": "type"
+          },
+          "$.body.ClientID": {
+            "match": "type"
+          },
+          "$.body.Email": {
+            "match": "type"
+          },
+          "$.body.FirstName": {
+            "match": "type"
+          },
+          "$.body.LastName": {
+            "match": "type"
+          },
+          "$.body.Phone": {
+            "match": "type"
+          },
+          "$.body.Status": {
+            "match": "type"
+          },
+          "$.body.ValidTill": {
+            "match": "type"
+          },
+          "$.headers['Content-Type']": {
+            "match": "type"
+          }
+        },
+        "status": 201
+      }
+    },
+    {
+      "description": "a POST request to create an installation",
+      "providerState": "a client with ID abc123 exists",
+      "request": {
+        "body": {
+          "Active": "true",
+          "ClientID": "abc123",
+          "Computer_name": "DESKTOP-001",
+          "IMS_version": "1.0.0",
+          "Installation_type": "server",
+          "Operating_system": "Windows 11",
+          "Processor": "Intel Core i7",
+          "RAM": "16GB"
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "matchingRules": {
+          "$.body.Active": {
+            "match": "type"
+          },
+          "$.body.ClientID": {
+            "match": "type"
+          },
+          "$.body.Computer_name": {
+            "match": "type"
+          },
+          "$.body.IMS_version": {
+            "match": "type"
+          },
+          "$.body.Installation_type": {
+            "match": "type"
+          },
+          "$.body.Operating_system": {
+            "match": "type"
+          },
+          "$.body.Processor": {
+            "match": "type"
+          },
+          "$.body.RAM": {
+            "match": "type"
+          },
+          "$.headers['Content-Type']": {
+            "match": "type"
+          }
+        },
+        "method": "POST",
+        "path": "/Installations"
+      },
+      "response": {
+        "body": {
+          "Active": "true",
+          "ClientID": "abc123",
+          "Computer_name": "DESKTOP-001",
+          "CreatedAt": "2024-01-01T00:00:00Z",
+          "ID": 1,
+          "IMS_version": "1.0.0",
+          "Installation_type": "server",
+          "Operating_system": "Windows 11",
+          "Processor": "Intel Core i7",
+          "RAM": "16GB",
+          "UpdatedAt": "2024-01-01T00:00:00Z"
+        },
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "matchingRules": {
+          "$.body.Active": {
+            "match": "type"
+          },
+          "$.body.ClientID": {
+            "match": "type"
+          },
+          "$.body.Computer_name": {
+            "match": "type"
+          },
+          "$.body.CreatedAt": {
+            "match": "type"
+          },
+          "$.body.ID": {
+            "match": "type"
+          },
+          "$.body.IMS_version": {
+            "match": "type"
+          },
+          "$.body.Installation_type": {
+            "match": "type"
+          },
+          "$.body.Operating_system": {
+            "match": "type"
+          },
+          "$.body.Processor": {
+            "match": "type"
+          },
+          "$.body.RAM": {
+            "match": "type"
+          },
+          "$.body.UpdatedAt": {
+            "match": "type"
+          },
+          "$.headers['Content-Type']": {
+            "match": "type"
+          }
+        },
+        "status": 201
+      }
+    },
+    {
+      "description": "a POST request to login",
+      "providerState": "a user with email john@example.com exists",
+      "request": {
+        "body": {
+          "Email": "john@example.com",
+          "Password": "secret123"
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "matchingRules": {
+          "$.body.Email": {
+            "match": "type"
+          },
+          "$.body.Password": {
+            "match": "type"
+          },
+          "$.headers['Content-Type']": {
+            "match": "type"
+          }
+        },
+        "method": "POST",
+        "path": "/Users/login"
+      },
+      "response": {
+        "body": {
+          "Email": "john@example.com",
+          "Token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.test",
+          "Username": "johndoe"
+        },
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "matchingRules": {
+          "$.body.Email": {
+            "match": "type"
+          },
+          "$.body.Token": {
+            "match": "type"
+          },
+          "$.body.Username": {
+            "match": "type"
+          },
+          "$.headers['Content-Type']": {
+            "match": "type"
+          }
+        },
+        "status": 202
+      }
+    },
+    {
+      "description": "a POST request to register a user",
+      "providerState": "no user with email john@example.com exists",
+      "request": {
+        "body": {
+          "Email": "john@example.com",
+          "Password": "secret123",
+          "Username": "johndoe"
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "matchingRules": {
+          "$.body.Email": {
+            "match": "type"
+          },
+          "$.body.Password": {
+            "match": "type"
+          },
+          "$.body.Username": {
+            "match": "type"
+          },
+          "$.headers['Content-Type']": {
+            "match": "type"
+          }
+        },
+        "method": "POST",
+        "path": "/Users"
+      },
+      "response": {
+        "body": {
+          "CreatedAt": "2024-01-01T00:00:00Z",
+          "Email": "john@example.com",
+          "ID": 1,
+          "UpdatedAt": "2024-01-01T00:00:00Z",
+          "Username": "johndoe",
+          "Verified": false
+        },
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "matchingRules": {
+          "$.body.CreatedAt": {
+            "match": "type"
+          },
+          "$.body.Email": {
+            "match": "type"
+          },
+          "$.body.ID": {
+            "match": "type"
+          },
+          "$.body.UpdatedAt": {
+            "match": "type"
+          },
+          "$.body.Username": {
+            "match": "type"
+          },
+          "$.body.Verified": {
+            "match": "type"
+          },
+          "$.headers['Content-Type']": {
+            "match": "type"
+          }
+        },
+        "status": 201
+      }
+    },
+    {
+      "description": "a PUT request to update a client",
+      "providerState": "a client with ID test-client-id exists",
+      "request": {
+        "body": {
+          "Address": "456 New St",
+          "BusinessName": "New Corp",
+          "Email": "jane@example.com",
+          "FirstName": "Jane",
+          "LastName": "Doe",
+          "Phone": "+256700000001",
+          "Status": "connected",
+          "ValidTill": "2026-01-01T00:00:00Z"
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "matchingRules": {
+          "$.body.Address": {
+            "match": "type"
+          },
+          "$.body.BusinessName": {
+            "match": "type"
+          },
+          "$.body.Email": {
+            "match": "type"
+          },
+          "$.body.FirstName": {
+            "match": "type"
+          },
+          "$.body.LastName": {
+            "match": "type"
+          },
+          "$.body.Phone": {
+            "match": "type"
+          },
+          "$.body.Status": {
+            "match": "type"
+          },
+          "$.body.ValidTill": {
+            "match": "type"
+          },
+          "$.headers['Content-Type']": {
+            "match": "type"
+          }
+        },
+        "method": "PUT",
+        "path": "/clients/test-client-id"
+      },
+      "response": {
+        "body": {
+          "Address": "123 Main St",
+          "BusinessName": "ACME Corp",
+          "ClientID": "abc123",
+          "Email": "john@example.com",
+          "FirstName": "John",
+          "LastName": "Doe",
+          "Phone": "+256700000000",
+          "Status": "connected",
+          "ValidTill": "2025-01-01T00:00:00Z"
+        },
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "matchingRules": {
+          "$.body.Address": {
+            "match": "type"
+          },
+          "$.body.BusinessName": {
+            "match": "type"
+          },
+          "$.body.ClientID": {
+            "match": "type"
+          },
+          "$.body.Email": {
+            "match": "type"
+          },
+          "$.body.FirstName": {
+            "match": "type"
+          },
+          "$.body.LastName": {
+            "match": "type"
+          },
+          "$.body.Phone": {
+            "match": "type"
+          },
+          "$.body.Status": {
+            "match": "type"
+          },
+          "$.body.ValidTill": {
+            "match": "type"
+          },
+          "$.headers['Content-Type']": {
+            "match": "type"
+          }
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "an authenticated DELETE request to remove a backup",
+      "providerState": "a backup with ID 1 exists",
+      "request": {
+        "headers": {
+          "Authorization": "Bearer pact-test-token"
+        },
+        "matchingRules": {
+          "$.headers.Authorization": {
+            "match": "type"
+          }
+        },
+        "method": "DELETE",
+        "path": "/backups/delete/1"
+      },
+      "response": {
+        "body": true,
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          },
+          "$.headers['Content-Type']": {
+            "match": "type"
+          }
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "an authenticated GET request for all backups",
+      "providerState": "backups exist",
+      "request": {
+        "headers": {
+          "Authorization": "Bearer pact-test-token"
+        },
+        "matchingRules": {
+          "$.headers.Authorization": {
+            "match": "type"
+          }
+        },
+        "method": "GET",
+        "path": "/backups"
+      },
+      "response": {
+        "body": [
+          {
+            "Backup": "s3://bucket/backup.tar.gz",
+            "Bill": {
+              "BackupCount": 1,
+              "BackupSize": 1024,
+              "Billed": false,
+              "ClientID": "abc123",
+              "CreatedAt": "2024-01-01T00:00:00Z",
+              "ID": 1,
+              "TotalCost": "0.0018273998877",
+              "UpdatedAt": "2024-01-01T00:00:00Z"
+            },
+            "BillID": 1,
+            "ClientID": "abc123",
+            "CreatedAt": "2024-01-01T00:00:00Z",
+            "ID": 1,
+            "Name": "daily-backup-2024",
+            "Size": 1024,
+            "UpdatedAt": "2024-01-01T00:00:00Z"
+          }
+        ],
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type",
+            "min": 1
+          },
+          "$.body[*].Backup": {
+            "match": "type"
+          },
+          "$.body[*].Bill": {
+            "match": "type"
+          },
+          "$.body[*].Bill.BackupCount": {
+            "match": "type"
+          },
+          "$.body[*].Bill.BackupSize": {
+            "match": "type"
+          },
+          "$.body[*].Bill.Billed": {
+            "match": "type"
+          },
+          "$.body[*].Bill.ClientID": {
+            "match": "type"
+          },
+          "$.body[*].Bill.CreatedAt": {
+            "match": "type"
+          },
+          "$.body[*].Bill.ID": {
+            "match": "type"
+          },
+          "$.body[*].Bill.TotalCost": {
+            "match": "type"
+          },
+          "$.body[*].Bill.UpdatedAt": {
+            "match": "type"
+          },
+          "$.body[*].BillID": {
+            "match": "type"
+          },
+          "$.body[*].ClientID": {
+            "match": "type"
+          },
+          "$.body[*].CreatedAt": {
+            "match": "type"
+          },
+          "$.body[*].ID": {
+            "match": "type"
+          },
+          "$.body[*].Name": {
+            "match": "type"
+          },
+          "$.body[*].Size": {
+            "match": "type"
+          },
+          "$.body[*].UpdatedAt": {
+            "match": "type"
+          },
+          "$.headers['Content-Type']": {
+            "match": "type"
+          }
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "an authenticated GET request for all bills",
+      "providerState": "bills exist",
+      "request": {
+        "headers": {
+          "Authorization": "Bearer pact-test-token"
+        },
+        "matchingRules": {
+          "$.headers.Authorization": {
+            "match": "type"
+          }
+        },
+        "method": "GET",
+        "path": "/bills"
+      },
+      "response": {
+        "body": [
+          {
+            "BackupCount": 1,
+            "BackupSize": 1024,
+            "Billed": false,
+            "ClientID": "abc123",
+            "CreatedAt": "2024-01-01T00:00:00Z",
+            "ID": 1,
+            "TotalCost": "0",
+            "UpdatedAt": "2024-01-01T00:00:00Z"
+          }
+        ],
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type",
+            "min": 1
+          },
+          "$.body[*].BackupCount": {
+            "match": "type"
+          },
+          "$.body[*].BackupSize": {
+            "match": "type"
+          },
+          "$.body[*].Billed": {
+            "match": "type"
+          },
+          "$.body[*].ClientID": {
+            "match": "type"
+          },
+          "$.body[*].CreatedAt": {
+            "match": "type"
+          },
+          "$.body[*].ID": {
+            "match": "type"
+          },
+          "$.body[*].TotalCost": {
+            "match": "type"
+          },
+          "$.body[*].UpdatedAt": {
+            "match": "type"
+          },
+          "$.headers['Content-Type']": {
+            "match": "type"
+          }
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "an authenticated GET request for backup by ID",
+      "providerState": "a backup with ID 1 exists",
+      "request": {
+        "headers": {
+          "Authorization": "Bearer pact-test-token"
+        },
+        "matchingRules": {
+          "$.headers.Authorization": {
+            "match": "type"
+          }
+        },
+        "method": "GET",
+        "path": "/backups/1"
+      },
+      "response": {
+        "body": {
+          "Backup": "s3://bucket/backup.tar.gz",
+          "Bill": {
+            "BackupCount": 1,
+            "BackupSize": 1024,
+            "Billed": false,
+            "ClientID": "abc123",
+            "CreatedAt": "2024-01-01T00:00:00Z",
+            "ID": 1,
+            "TotalCost": "0.0018273998877",
+            "UpdatedAt": "2024-01-01T00:00:00Z"
+          },
+          "BillID": 1,
+          "ClientID": "abc123",
+          "CreatedAt": "2024-01-01T00:00:00Z",
+          "ID": 1,
+          "Name": "daily-backup-2024",
+          "Size": 1024,
+          "UpdatedAt": "2024-01-01T00:00:00Z"
+        },
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "matchingRules": {
+          "$.body.Backup": {
+            "match": "type"
+          },
+          "$.body.Bill": {
+            "match": "type"
+          },
+          "$.body.Bill.BackupCount": {
+            "match": "type"
+          },
+          "$.body.Bill.BackupSize": {
+            "match": "type"
+          },
+          "$.body.Bill.Billed": {
+            "match": "type"
+          },
+          "$.body.Bill.ClientID": {
+            "match": "type"
+          },
+          "$.body.Bill.CreatedAt": {
+            "match": "type"
+          },
+          "$.body.Bill.ID": {
+            "match": "type"
+          },
+          "$.body.Bill.TotalCost": {
+            "match": "type"
+          },
+          "$.body.Bill.UpdatedAt": {
+            "match": "type"
+          },
+          "$.body.BillID": {
+            "match": "type"
+          },
+          "$.body.ClientID": {
+            "match": "type"
+          },
+          "$.body.CreatedAt": {
+            "match": "type"
+          },
+          "$.body.ID": {
+            "match": "type"
+          },
+          "$.body.Name": {
+            "match": "type"
+          },
+          "$.body.Size": {
+            "match": "type"
+          },
+          "$.body.UpdatedAt": {
+            "match": "type"
+          },
+          "$.headers['Content-Type']": {
+            "match": "type"
+          }
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "an authenticated GET request for bill by ID",
+      "providerState": "a bill with ID 1 exists",
+      "request": {
+        "headers": {
+          "Authorization": "Bearer pact-test-token"
+        },
+        "matchingRules": {
+          "$.headers.Authorization": {
+            "match": "type"
+          }
+        },
+        "method": "GET",
+        "path": "/bills/1"
+      },
+      "response": {
+        "body": {
+          "BackupCount": 1,
+          "BackupSize": 1024,
+          "Billed": false,
+          "ClientID": "abc123",
+          "CreatedAt": "2024-01-01T00:00:00Z",
+          "ID": 1,
+          "TotalCost": "0",
+          "UpdatedAt": "2024-01-01T00:00:00Z"
+        },
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "matchingRules": {
+          "$.body.BackupCount": {
+            "match": "type"
+          },
+          "$.body.BackupSize": {
+            "match": "type"
+          },
+          "$.body.Billed": {
+            "match": "type"
+          },
+          "$.body.ClientID": {
+            "match": "type"
+          },
+          "$.body.CreatedAt": {
+            "match": "type"
+          },
+          "$.body.ID": {
+            "match": "type"
+          },
+          "$.body.TotalCost": {
+            "match": "type"
+          },
+          "$.body.UpdatedAt": {
+            "match": "type"
+          },
+          "$.headers['Content-Type']": {
+            "match": "type"
+          }
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "an authenticated GET request for bills by client ID",
+      "providerState": "bills exist for client abc123",
+      "request": {
+        "headers": {
+          "Authorization": "Bearer pact-test-token"
+        },
+        "matchingRules": {
+          "$.headers.Authorization": {
+            "match": "type"
+          }
+        },
+        "method": "GET",
+        "path": "/bills/client/abc123"
+      },
+      "response": {
+        "body": [
+          {
+            "BackupCount": 1,
+            "BackupSize": 1024,
+            "Billed": false,
+            "ClientID": "abc123",
+            "CreatedAt": "2024-01-01T00:00:00Z",
+            "ID": 1,
+            "TotalCost": "0",
+            "UpdatedAt": "2024-01-01T00:00:00Z"
+          }
+        ],
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type",
+            "min": 1
+          },
+          "$.body[*].BackupCount": {
+            "match": "type"
+          },
+          "$.body[*].BackupSize": {
+            "match": "type"
+          },
+          "$.body[*].Billed": {
+            "match": "type"
+          },
+          "$.body[*].ClientID": {
+            "match": "type"
+          },
+          "$.body[*].CreatedAt": {
+            "match": "type"
+          },
+          "$.body[*].ID": {
+            "match": "type"
+          },
+          "$.body[*].TotalCost": {
+            "match": "type"
+          },
+          "$.body[*].UpdatedAt": {
+            "match": "type"
+          },
+          "$.headers['Content-Type']": {
+            "match": "type"
+          }
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "an authenticated POST request to create a backup",
+      "providerState": "a client with ID abc123 exists",
+      "request": {
+        "body": {
+          "Backup": "s3://bucket/backup.tar.gz",
+          "ClientID": "abc123",
+          "Name": "daily-backup-2024",
+          "Size": 1024
+        },
+        "headers": {
+          "Authorization": "Bearer pact-test-token",
+          "Content-Type": "application/json"
+        },
+        "matchingRules": {
+          "$.body.Backup": {
+            "match": "type"
+          },
+          "$.body.ClientID": {
+            "match": "type"
+          },
+          "$.body.Name": {
+            "match": "type"
+          },
+          "$.body.Size": {
+            "match": "type"
+          },
+          "$.headers.Authorization": {
+            "match": "type"
+          },
+          "$.headers['Content-Type']": {
+            "match": "type"
+          }
+        },
+        "method": "POST",
+        "path": "/backups"
+      },
+      "response": {
+        "body": {
+          "Backup": "s3://bucket/backup.tar.gz",
+          "Bill": {
+            "BackupCount": 1,
+            "BackupSize": 1024,
+            "Billed": false,
+            "ClientID": "abc123",
+            "CreatedAt": "2024-01-01T00:00:00Z",
+            "ID": 1,
+            "TotalCost": "0.0018273998877",
+            "UpdatedAt": "2024-01-01T00:00:00Z"
+          },
+          "BillID": 1,
+          "ClientID": "abc123",
+          "CreatedAt": "2024-01-01T00:00:00Z",
+          "ID": 1,
+          "Name": "daily-backup-2024",
+          "Size": 1024,
+          "UpdatedAt": "2024-01-01T00:00:00Z"
+        },
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "matchingRules": {
+          "$.body.Backup": {
+            "match": "type"
+          },
+          "$.body.Bill": {
+            "match": "type"
+          },
+          "$.body.Bill.BackupCount": {
+            "match": "type"
+          },
+          "$.body.Bill.BackupSize": {
+            "match": "type"
+          },
+          "$.body.Bill.Billed": {
+            "match": "type"
+          },
+          "$.body.Bill.ClientID": {
+            "match": "type"
+          },
+          "$.body.Bill.CreatedAt": {
+            "match": "type"
+          },
+          "$.body.Bill.ID": {
+            "match": "type"
+          },
+          "$.body.Bill.TotalCost": {
+            "match": "type"
+          },
+          "$.body.Bill.UpdatedAt": {
+            "match": "type"
+          },
+          "$.body.BillID": {
+            "match": "type"
+          },
+          "$.body.ClientID": {
+            "match": "type"
+          },
+          "$.body.CreatedAt": {
+            "match": "type"
+          },
+          "$.body.ID": {
+            "match": "type"
+          },
+          "$.body.Name": {
+            "match": "type"
+          },
+          "$.body.Size": {
+            "match": "type"
+          },
+          "$.body.UpdatedAt": {
+            "match": "type"
+          },
+          "$.headers['Content-Type']": {
+            "match": "type"
+          }
+        },
+        "status": 201
+      }
+    },
+    {
+      "description": "an authenticated POST request to create a bill",
+      "providerState": "a client with ID abc123 exists",
+      "request": {
+        "body": {
+          "ClientID": "abc123"
+        },
+        "headers": {
+          "Authorization": "Bearer pact-test-token",
+          "Content-Type": "application/json"
+        },
+        "matchingRules": {
+          "$.body.ClientID": {
+            "match": "type"
+          },
+          "$.headers.Authorization": {
+            "match": "type"
+          },
+          "$.headers['Content-Type']": {
+            "match": "type"
+          }
+        },
+        "method": "POST",
+        "path": "/bills"
+      },
+      "response": {
+        "body": {
+          "BackupCount": 1,
+          "BackupSize": 1024,
+          "Billed": false,
+          "ClientID": "abc123",
+          "CreatedAt": "2024-01-01T00:00:00Z",
+          "ID": 1,
+          "TotalCost": "0",
+          "UpdatedAt": "2024-01-01T00:00:00Z"
+        },
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "matchingRules": {
+          "$.body.BackupCount": {
+            "match": "type"
+          },
+          "$.body.BackupSize": {
+            "match": "type"
+          },
+          "$.body.Billed": {
+            "match": "type"
+          },
+          "$.body.ClientID": {
+            "match": "type"
+          },
+          "$.body.CreatedAt": {
+            "match": "type"
+          },
+          "$.body.ID": {
+            "match": "type"
+          },
+          "$.body.TotalCost": {
+            "match": "type"
+          },
+          "$.body.UpdatedAt": {
+            "match": "type"
+          },
+          "$.headers['Content-Type']": {
+            "match": "type"
+          }
+        },
+        "status": 201
+      }
+    }
+  ],
+  "metadata": {
+    "pact-go": {
+      "version": "2.4.2"
+    },
+    "pactRust": {
+      "ffi": "0.4.28",
+      "mockserver": "1.2.16",
+      "models": "1.3.5"
+    },
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  },
+  "provider": {
+    "name": "IMSController"
+  }
+}

@@ -16,9 +16,9 @@ func TestFeatures(t *testing.T) {
 	suite := godog.TestSuite{
 		ScenarioInitializer: InitializeScenario,
 		Options: &godog.Options{
-			Format:   "pretty",
-			Paths:    []string{featureDir},
-			TestingT: t,
+			Format:      "pretty",
+			Paths:       []string{featureDir},
+			TestingT:    t,
 			Concurrency: 1,
 		},
 	}

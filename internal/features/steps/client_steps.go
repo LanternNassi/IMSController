@@ -148,7 +148,6 @@ func iSendARequestToUpdateClientWithIDFromStored(table *godog.Table) error {
 		updates[header.Value] = dataRow[i].Value
 	}
 
-	
 	return clientCtx.SendUpdateClientRequest(clientID, updates)
 }
 

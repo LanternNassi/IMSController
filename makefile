@@ -51,6 +51,41 @@ test-godog-local:
 	@ ${INFO} "Godog tests completed successfully"
 	@ echo " "
 
+# ── Pact contract testing ────────────────────────────────────────────────────
+#
+# pact-go v2 uses CGO to call the Rust Pact FFI library.
+# The Docker targets below use the golang:latest builder image (which has gcc)
+# and install the FFI automatically.
+#
+# To run locally on Linux/macOS, install the FFI first:
+#   go run github.com/pact-foundation/pact-go/v2 install --libDir /usr/local/lib
+# On Windows, use WSL2 or the Docker targets below.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Run Pact consumer tests inside Docker (generates pact files in ./pacts/)
+test-pact-consumer:
+	@ ${INFO} "Running Pact consumer tests (Docker)"
+	@ docker compose -f $(DOCKER_COMPOSE_FILE) run --rm go_test sh -c \
+		"go run github.com/pact-foundation/pact-go/v2 install --libDir /usr/local/lib && \
+		 CGO_ENABLED=1 go test -v -count=1 ./internal/contract/consumer/..."
+	@ ${INFO} "Consumer tests done — pact files written to ./pacts/"
+	@ echo " "
+
+# Run Pact provider verification inside Docker (requires pact files + test DB)
+test-pact-provider:
+	@ ${INFO} "Running Pact provider verification (Docker)"
+	@ docker compose -f $(DOCKER_COMPOSE_FILE) run --rm go_test sh -c \
+		"go run github.com/pact-foundation/pact-go/v2 install --libDir /usr/local/lib && \
+		 CGO_ENABLED=1 go test -v -count=1 ./internal/contract/provider/..."
+	@ ${INFO} "Provider verification completed"
+	@ echo " "
+
+# Full Pact workflow: generate pacts then verify provider
+test-pact: test-pact-consumer test-pact-provider
+	@ ${INFO} "Pact contract testing completed"
+	@ echo " "
+
+
 # Run godog tests locally with coverage
 test-godog-local-coverage:
 	@ ${INFO} "Running godog BDD tests locally with coverage"
